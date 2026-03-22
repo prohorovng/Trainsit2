@@ -9,11 +9,7 @@ function SectionHeader({ eyebrow, title, text }) {
 }
 
 function InfoCard({ title, children, tone = "default" }) {
-  const toneClass =
-    tone === "accent"
-      ? "border-cyan-400/20 bg-cyan-400/5"
-      : "border-white/10 bg-white/[0.03]";
-
+  const toneClass = tone === "accent" ? "border-cyan-400/20 bg-cyan-400/5" : "border-white/10 bg-white/[0.03]";
   return (
     <div className={`rounded-3xl border p-6 ${toneClass}`}>
       <div className="text-lg font-semibold text-white">{title}</div>
@@ -25,22 +21,15 @@ function InfoCard({ title, children, tone = "default" }) {
 function SimpleTable({ columns, rows }) {
   return (
     <div className="overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03]">
-      <div
-        className="grid border-b border-white/10 bg-black/20 px-6 py-4 text-sm font-medium text-white/70"
-        style={{ gridTemplateColumns: `repeat(${columns.length}, minmax(0, 1fr))` }}
-      >
+      <div className="grid border-b border-white/10 bg-black/20 px-6 py-4 text-sm font-medium text-white/70" style={{ gridTemplateColumns: `repeat(${columns.length}, minmax(0, 1fr))` }}>
         {columns.map((col) => (
           <div key={col}>{col}</div>
         ))}
       </div>
       {rows.map((row, idx) => (
-        <div
-          key={idx}
-          className="grid gap-4 border-b border-white/10 px-6 py-5 last:border-b-0"
-          style={{ gridTemplateColumns: `repeat(${columns.length}, minmax(0, 1fr))` }}
-        >
-          {row.map((cell, cellIdx) => (
-            <div key={cellIdx} className="text-sm leading-7 text-white/70">
+        <div key={idx} className="grid gap-4 border-b border-white/10 px-6 py-5 last:border-b-0" style={{ gridTemplateColumns: `repeat(${columns.length}, minmax(0, 1fr))` }}>
+          {row.map((cell, i) => (
+            <div key={i} className="text-sm leading-7 text-white/70">
               {cell}
             </div>
           ))}
@@ -68,34 +57,502 @@ function JourneyFlow({ title, steps }) {
   );
 }
 
-function WireframePreview({ title, blocks }) {
+function WLine({ className = "" }) {
+  return <div className={`rounded-full bg-neutral-300 ${className}`} />;
+}
+
+function WBox({ className = "", children }) {
+  return <div className={`rounded-2xl border border-neutral-300 bg-white ${className}`}>{children}</div>;
+}
+
+function WButton({ className = "" }) {
+  return <div className={`rounded-xl border border-neutral-400 bg-neutral-100 ${className}`} />;
+}
+
+function WField({ tall = false }) {
   return (
-    <div className="rounded-3xl border border-white/10 bg-white/[0.03] p-6">
-      <div className="mb-4 flex items-center justify-between gap-3">
-        <div className="text-lg font-semibold text-white">{title}</div>
-        <div className="rounded-full border border-white/10 px-3 py-1 text-xs uppercase tracking-[0.18em] text-white/45">
-          Page structure
+    <div className="rounded-xl border border-neutral-300 bg-white p-3">
+      <WLine className="h-2.5 w-16" />
+      <div className={`mt-3 rounded-lg border border-neutral-200 bg-neutral-50 ${tall ? "h-24" : "h-10"}`} />
+    </div>
+  );
+}
+
+function WireframePreview({ title, type, note }) {
+  const header = (
+    <div className="flex items-center justify-between border-b border-neutral-300 px-6 py-4">
+      <div className="flex items-center gap-4">
+        <div className="h-8 w-28 rounded-lg border border-neutral-400 bg-neutral-100" />
+        <div className="hidden items-center gap-3 md:flex">
+          <WLine className="h-3 w-12" />
+          <WLine className="h-3 w-16" />
+          <WLine className="h-3 w-14" />
+          <WLine className="h-3 w-12" />
         </div>
       </div>
-      <div className="overflow-hidden rounded-[28px] border border-white/10 bg-neutral-900">
-        <div className="flex items-center gap-2 border-b border-white/10 px-4 py-3">
-          <div className="h-3 w-3 rounded-full bg-white/20" />
-          <div className="h-3 w-3 rounded-full bg-white/10" />
-          <div className="h-3 w-3 rounded-full bg-white/10" />
-          <div className="ml-3 h-8 flex-1 rounded-xl border border-white/10 bg-black/25" />
-        </div>
-        <div className="space-y-3 p-4">
-          {blocks.map((block, idx) => (
-            <div
-              key={block[0]}
-              className={`rounded-2xl border px-4 py-3 ${idx === 0 ? "border-cyan-400/35 bg-cyan-400/8" : "border-white/10 bg-black/20"}`}
-            >
-              <div className="text-xs uppercase tracking-[0.18em] text-white/45">{block[0]}</div>
-              <div className="mt-1 text-sm leading-6 text-white/80">{block[1]}</div>
+      <div className="flex items-center gap-3">
+        <WLine className="h-3 w-10" />
+        <WButton className="h-10 w-28" />
+      </div>
+    </div>
+  );
+
+  let body = null;
+
+  if (type === "home") {
+    body = (
+      <div className="space-y-6 p-6">
+        <WBox className="grid grid-cols-1 gap-6 p-6 lg:grid-cols-[1.05fr_0.95fr]">
+          <div className="space-y-4">
+            <WLine className="h-3 w-20" />
+            <WLine className="h-7 w-full max-w-[460px]" />
+            <WLine className="h-7 w-full max-w-[400px]" />
+            <WLine className="h-4 w-full max-w-[420px]" />
+            <WLine className="h-4 w-full max-w-[380px]" />
+            <div className="flex gap-3 pt-2">
+              <WButton className="h-11 w-36" />
+              <WButton className="h-11 w-28" />
             </div>
+          </div>
+          <div className="rounded-3xl border border-neutral-300 bg-neutral-100 p-5">
+            <div className="grid h-full grid-cols-2 gap-3">
+              <div className="rounded-2xl border border-neutral-300 bg-white" />
+              <div className="space-y-3">
+                <div className="h-24 rounded-2xl border border-neutral-300 bg-white" />
+                <div className="h-24 rounded-2xl border border-neutral-300 bg-white" />
+              </div>
+            </div>
+          </div>
+        </WBox>
+
+        <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
+          {[1, 2, 3, 4].map((i) => (
+            <WBox key={i} className="p-4">
+              <div className="h-10 w-10 rounded-xl border border-neutral-300 bg-neutral-100" />
+              <WLine className="mt-4 h-4 w-20" />
+              <WLine className="mt-3 h-3 w-full" />
+              <WLine className="mt-2 h-3 w-5/6" />
+            </WBox>
           ))}
         </div>
+
+        <WBox className="p-6">
+          <div className="mb-5 flex items-center justify-between gap-4">
+            <div className="space-y-2">
+              <WLine className="h-5 w-32" />
+              <WLine className="h-3 w-56" />
+            </div>
+            <WButton className="h-10 w-24" />
+          </div>
+          <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+            {[1, 2, 3].map((i) => (
+              <WBox key={i} className="p-4">
+                <div className="h-28 rounded-2xl border border-neutral-300 bg-neutral-100" />
+                <WLine className="mt-4 h-4 w-24" />
+                <WLine className="mt-3 h-3 w-full" />
+                <WLine className="mt-2 h-3 w-4/5" />
+                <WLine className="mt-2 h-3 w-3/5" />
+              </WBox>
+            ))}
+          </div>
+        </WBox>
+
+        <WBox className="grid grid-cols-1 gap-4 p-6 lg:grid-cols-[0.9fr_1.1fr]">
+          <div className="space-y-3">
+            <WLine className="h-5 w-28" />
+            <WLine className="h-3 w-full" />
+            <WLine className="h-3 w-5/6" />
+            <WLine className="h-3 w-4/6" />
+          </div>
+          <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
+            {[1, 2, 3].map((i) => (
+              <WBox key={i} className="p-4">
+                <WLine className="h-3 w-10" />
+                <WLine className="mt-3 h-4 w-16" />
+                <WLine className="mt-2 h-3 w-full" />
+              </WBox>
+            ))}
+          </div>
+        </WBox>
+
+        <WBox className="p-6">
+          <WLine className="h-5 w-20" />
+          <div className="mt-4 space-y-3">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="flex items-center justify-between rounded-xl border border-neutral-300 bg-neutral-50 px-4 py-4">
+                <div className="space-y-2">
+                  <WLine className="h-3 w-40" />
+                  <WLine className="h-3 w-28" />
+                </div>
+                <WLine className="h-3 w-4" />
+              </div>
+            ))}
+          </div>
+        </WBox>
+
+        <WBox className="flex items-center justify-between gap-4 p-6">
+          <div className="space-y-2">
+            <WLine className="h-5 w-44" />
+            <WLine className="h-3 w-60" />
+          </div>
+          <WButton className="h-11 w-36" />
+        </WBox>
+
+        <WBox className="px-6 py-5">
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+            {[1, 2, 3, 4].map((i) => (
+              <div key={i} className="space-y-2">
+                <WLine className="h-4 w-16" />
+                <WLine className="h-3 w-24" />
+                <WLine className="h-3 w-20" />
+              </div>
+            ))}
+          </div>
+        </WBox>
       </div>
+    );
+  }
+
+  if (type === "quote") {
+    body = (
+      <div className="space-y-6 p-6">
+        <WBox className="p-6">
+          <div className="space-y-2">
+            <WLine className="h-5 w-36" />
+            <WLine className="h-3 w-72" />
+          </div>
+          <div className="mt-5 grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-4">
+            <WField />
+            <WField />
+            <WField />
+            <WField />
+          </div>
+          <div className="mt-5 flex justify-end">
+            <WButton className="h-11 w-40" />
+          </div>
+        </WBox>
+
+        <div className="grid grid-cols-1 gap-4 xl:grid-cols-[1.15fr_0.85fr]">
+          <div className="space-y-4">
+            {[1, 2, 3].map((i) => (
+              <WBox key={i} className="p-5">
+                <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+                  <div className="space-y-2">
+                    <WLine className="h-5 w-40" />
+                    <WLine className="h-3 w-56" />
+                    <WLine className="h-3 w-44" />
+                  </div>
+                  <div className="space-y-2 md:text-right">
+                    <WLine className="ml-auto h-5 w-20" />
+                    <WButton className="ml-auto h-10 w-28" />
+                  </div>
+                </div>
+                <div className="mt-5 grid grid-cols-1 gap-3 md:grid-cols-3">
+                  {[1, 2, 3].map((x) => (
+                    <div key={x} className="rounded-xl border border-neutral-300 bg-neutral-50 p-3">
+                      <WLine className="h-3 w-12" />
+                      <WLine className="mt-2 h-4 w-20" />
+                    </div>
+                  ))}
+                </div>
+              </WBox>
+            ))}
+          </div>
+
+          <div className="space-y-4">
+            <WBox className="p-5">
+              <WLine className="h-5 w-28" />
+              <div className="mt-4 space-y-3">
+                {[1, 2, 3, 4].map((i) => (
+                  <div key={i} className="rounded-xl border border-neutral-300 bg-neutral-50 p-3">
+                    <WLine className="h-3 w-16" />
+                    <WLine className="mt-3 h-9 w-full rounded-lg" />
+                  </div>
+                ))}
+              </div>
+            </WBox>
+            <WBox className="p-5">
+              <WLine className="h-5 w-24" />
+              <div className="mt-4 space-y-3">
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className="rounded-xl border border-neutral-300 bg-neutral-50 px-4 py-4">
+                    <WLine className="h-3 w-full" />
+                  </div>
+                ))}
+              </div>
+            </WBox>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (type === "solutions") {
+    body = (
+      <div className="space-y-6 p-6">
+        <WBox className="grid grid-cols-1 gap-6 p-6 lg:grid-cols-[1fr_0.8fr]">
+          <div className="space-y-3">
+            <WLine className="h-4 w-20" />
+            <WLine className="h-7 w-full max-w-[420px]" />
+            <WLine className="h-4 w-full max-w-[380px]" />
+            <WLine className="h-4 w-5/6" />
+          </div>
+          <div className="h-40 rounded-3xl border border-neutral-300 bg-neutral-100" />
+        </WBox>
+
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          {[1, 2, 3, 4].map((i) => (
+            <WBox key={i} className="p-5">
+              <WLine className="h-5 w-28" />
+              <WLine className="mt-3 h-3 w-full" />
+              <WLine className="mt-2 h-3 w-5/6" />
+              <WLine className="mt-2 h-3 w-4/6" />
+            </WBox>
+          ))}
+        </div>
+
+        <WBox className="p-6">
+          <div className="mb-4 space-y-2">
+            <WLine className="h-5 w-36" />
+            <WLine className="h-3 w-60" />
+          </div>
+          <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+            <div className="rounded-2xl border border-neutral-300 bg-neutral-50 p-5">
+              <WLine className="h-4 w-28" />
+              <WLine className="mt-4 h-3 w-full" />
+              <WLine className="mt-2 h-3 w-5/6" />
+              <WLine className="mt-2 h-3 w-4/6" />
+            </div>
+            <div className="rounded-2xl border border-neutral-300 bg-neutral-50 p-5">
+              <WLine className="h-4 w-28" />
+              <WLine className="mt-4 h-3 w-full" />
+              <WLine className="mt-2 h-3 w-5/6" />
+              <WLine className="mt-2 h-3 w-4/6" />
+            </div>
+          </div>
+        </WBox>
+
+        <WBox className="p-6">
+          <div className="mb-4 space-y-2">
+            <WLine className="h-5 w-28" />
+            <WLine className="h-3 w-48" />
+          </div>
+          <div className="grid grid-cols-[1fr_1fr] gap-3">
+            <div className="rounded-xl border border-neutral-300 bg-neutral-50 p-4">
+              <WLine className="h-4 w-20" />
+              <div className="mt-4 space-y-3">
+                {[1, 2, 3, 4].map((i) => (
+                  <WLine key={i} className="h-3 w-full" />
+                ))}
+              </div>
+            </div>
+            <div className="rounded-xl border border-neutral-300 bg-neutral-50 p-4">
+              <WLine className="h-4 w-20" />
+              <div className="mt-4 space-y-3">
+                {[1, 2, 3, 4].map((i) => (
+                  <WLine key={i} className="h-3 w-full" />
+                ))}
+              </div>
+            </div>
+          </div>
+        </WBox>
+
+        <WBox className="p-6">
+          <WLine className="h-5 w-24" />
+          <div className="mt-4 space-y-3">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="flex items-center justify-between rounded-xl border border-neutral-300 bg-neutral-50 px-4 py-4">
+                <div className="space-y-2">
+                  <WLine className="h-3 w-44" />
+                  <WLine className="h-3 w-32" />
+                </div>
+                <WLine className="h-3 w-4" />
+              </div>
+            ))}
+          </div>
+        </WBox>
+
+        <WBox className="flex items-center justify-between gap-4 p-6">
+          <div className="space-y-2">
+            <WLine className="h-5 w-44" />
+            <WLine className="h-3 w-60" />
+          </div>
+          <WButton className="h-11 w-36" />
+        </WBox>
+      </div>
+    );
+  }
+
+  if (type === "about") {
+    body = (
+      <div className="space-y-6 p-6">
+        <WBox className="grid grid-cols-1 gap-6 p-6 lg:grid-cols-[0.95fr_1.05fr]">
+          <div className="h-56 rounded-3xl border border-neutral-300 bg-neutral-100" />
+          <div className="space-y-3">
+            <WLine className="h-4 w-20" />
+            <WLine className="h-7 w-full max-w-[360px]" />
+            <WLine className="h-4 w-full" />
+            <WLine className="h-4 w-5/6" />
+            <WLine className="h-4 w-4/6" />
+          </div>
+        </WBox>
+
+        <WBox className="p-6">
+          <div className="mb-4 space-y-2">
+            <WLine className="h-5 w-28" />
+            <WLine className="h-3 w-60" />
+          </div>
+          <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+            <div className="space-y-2">
+              <WLine className="h-3 w-full" />
+              <WLine className="h-3 w-full" />
+              <WLine className="h-3 w-5/6" />
+              <WLine className="h-3 w-4/6" />
+            </div>
+            <div className="space-y-2">
+              <WLine className="h-3 w-full" />
+              <WLine className="h-3 w-full" />
+              <WLine className="h-3 w-5/6" />
+              <WLine className="h-3 w-4/6" />
+            </div>
+          </div>
+        </WBox>
+
+        <WBox className="p-6">
+          <div className="mb-4 space-y-2">
+            <WLine className="h-5 w-20" />
+            <WLine className="h-3 w-40" />
+          </div>
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+            {[1, 2, 3].map((i) => (
+              <WBox key={i} className="p-4">
+                <div className="h-28 rounded-2xl border border-neutral-300 bg-neutral-100" />
+                <WLine className="mt-4 h-4 w-20" />
+                <WLine className="mt-2 h-3 w-16" />
+                <WLine className="mt-3 h-3 w-full" />
+                <WLine className="mt-2 h-3 w-5/6" />
+              </WBox>
+            ))}
+          </div>
+        </WBox>
+
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+          {[1, 2, 3].map((i) => (
+            <WBox key={i} className="p-5">
+              <WLine className="h-5 w-24" />
+              <WLine className="mt-3 h-3 w-full" />
+              <WLine className="mt-2 h-3 w-5/6" />
+              <WLine className="mt-2 h-3 w-4/6" />
+            </WBox>
+          ))}
+        </div>
+
+        <WBox className="flex items-center justify-between gap-4 p-6">
+          <div className="space-y-2">
+            <WLine className="h-5 w-40" />
+            <WLine className="h-3 w-56" />
+          </div>
+          <WButton className="h-11 w-32" />
+        </WBox>
+      </div>
+    );
+  }
+
+  if (type === "contact") {
+    body = (
+      <div className="space-y-6 p-6">
+        <WBox className="grid grid-cols-1 gap-6 p-6 lg:grid-cols-[1.05fr_0.95fr]">
+          <div className="space-y-3">
+            <WLine className="h-4 w-16" />
+            <WLine className="h-7 w-full max-w-[340px]" />
+            <WLine className="h-4 w-full max-w-[360px]" />
+            <WLine className="h-4 w-5/6" />
+          </div>
+          <div className="rounded-3xl border border-neutral-300 bg-neutral-100 p-5">
+            <div className="grid grid-cols-2 gap-3">
+              <div className="space-y-3">
+                <div className="h-16 rounded-2xl border border-neutral-300 bg-white" />
+                <div className="h-16 rounded-2xl border border-neutral-300 bg-white" />
+              </div>
+              <div className="min-h-[140px] rounded-2xl border border-neutral-300 bg-white" />
+            </div>
+          </div>
+        </WBox>
+
+        <div className="grid grid-cols-1 gap-4 xl:grid-cols-[1.05fr_0.95fr]">
+          <WBox className="p-6">
+            <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+              <WField />
+              <WField />
+              <WField />
+              <WField />
+            </div>
+            <div className="mt-3">
+              <WField tall />
+            </div>
+            <div className="mt-5 flex justify-end">
+              <WButton className="h-11 w-32" />
+            </div>
+          </WBox>
+
+          <div className="space-y-4">
+            <WBox className="p-5">
+              <WLine className="h-5 w-24" />
+              <div className="mt-4 space-y-3">
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className="rounded-xl border border-neutral-300 bg-neutral-50 p-4">
+                    <WLine className="h-3 w-28" />
+                    <WLine className="mt-2 h-3 w-20" />
+                  </div>
+                ))}
+              </div>
+            </WBox>
+            <WBox className="p-5">
+              <WLine className="h-5 w-20" />
+              <div className="mt-4 space-y-3">
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className="flex items-center justify-between rounded-xl border border-neutral-300 bg-neutral-50 px-4 py-4">
+                    <div className="space-y-2">
+                      <WLine className="h-3 w-36" />
+                      <WLine className="h-3 w-24" />
+                    </div>
+                    <WLine className="h-3 w-4" />
+                  </div>
+                ))}
+              </div>
+            </WBox>
+          </div>
+        </div>
+
+        <WBox className="px-6 py-5">
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+            {[1, 2, 3, 4].map((i) => (
+              <div key={i} className="space-y-2">
+                <WLine className="h-4 w-16" />
+                <WLine className="h-3 w-24" />
+                <WLine className="h-3 w-20" />
+              </div>
+            ))}
+          </div>
+        </WBox>
+      </div>
+    );
+  }
+
+  return (
+    <div className="rounded-3xl border border-white/10 bg-white/[0.03] p-6">
+      <div className="mb-5 flex items-center justify-between gap-3">
+        <div>
+          <div className="text-lg font-semibold text-white">{title}</div>
+          <div className="mt-1 text-sm text-white/50">Full-page wireframe preview</div>
+        </div>
+        <div className="rounded-full border border-white/10 px-3 py-1 text-xs uppercase tracking-[0.18em] text-white/45">Desktop artboard</div>
+      </div>
+      <div className="overflow-hidden rounded-[32px] border border-neutral-400 bg-white shadow-[0_30px_80px_rgba(0,0,0,0.25)]">
+        {header}
+        <div className="max-h-[1100px] overflow-auto bg-neutral-50">{body}</div>
+      </div>
+      <div className="mt-4 rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm leading-6 text-white/65">{note}</div>
     </div>
   );
 }
@@ -132,21 +589,9 @@ export default function TrainsitBlueprintWebsite() {
   ];
 
   const roleRows = [
-    [
-      "New visitor",
-      "First-time user coming from Google, LinkedIn, conference, or direct referral",
-      "Understand what Trainsit is, validate value, check route / quote path, then register or continue into platform",
-    ],
-    [
-      "Evaluator",
-      "Logistics lead, decision-maker, or enterprise buyer comparing vendors",
-      "Check credibility, understand capabilities, see insurance / coverage / operations, then contact sales or continue deeper",
-    ],
-    [
-      "Existing user",
-      "User who already has an account on app.trainsit.com",
-      "Reach dashboard or existing workflow as quickly as possible",
-    ],
+    ["New visitor", "First-time user coming from Google, LinkedIn, conference, or direct referral", "Understand what Trainsit is, validate value, check route / quote path, then register or continue into platform"],
+    ["Evaluator", "Logistics lead, decision-maker, or enterprise buyer comparing vendors", "Check credibility, understand capabilities, see insurance / coverage / operations, then contact sales or continue deeper"],
+    ["Existing user", "User who already has an account on app.trainsit.com", "Reach dashboard or existing workflow as quickly as possible"],
   ];
 
   const journeys = [
@@ -219,46 +664,29 @@ export default function TrainsitBlueprintWebsite() {
 
   const wireframes = [
     {
-      title: "Homepage",
-      blocks: [
-        ["Header", "Logo · Navigation · Get a Quote CTA · Login link to app"],
-        ["Hero", "Headline, subheadline, Get a Quote CTA, background visual"],
-        ["How it works", "3-step process: Search → Compare → Book"],
-        ["Benefits", "3–4 cards: Speed, Savings, Technology, Coverage"],
-        ["Social proof", "Client logos or testimonials if available"],
-        ["CTA", "Ready to ship? → /get-a-quote"],
-        ["Footer", "Navigation, contacts, social, legal"],
-      ],
+      title: "Homepage — Desktop Wireframe",
+      type: "home",
+      note: "Purpose: explain the product quickly, build trust, and move users into Get a Quote without forcing them to understand the whole platform first.",
     },
     {
-      title: "Get a Quote",
-      blocks: [
-        ["Header", "Consistent site nav + CTA"],
-        ["Intro", "Get a Quote — Find a route and compare pricing"],
-        ["Form", "Origin · Destination · Date · Carrier optional · Search Routes"],
-        ["States", "Empty / Loading / Result / No result / Error"],
-        ["Result card", "Price, transit time, carrier, Book CTA to app"],
-        ["Mini FAQ", "How pricing works, what is included"],
-      ],
+      title: "Get a Quote — Desktop Wireframe",
+      type: "quote",
+      note: "Purpose: let users search a route, understand result states, compare basic route data, and continue into app.trainsit.com only when they are ready to book or sign in.",
     },
     {
-      title: "Solutions",
-      blocks: [
-        ["Intro", "Platform overview and buyer context"],
-        ["Capabilities", "Route search, transparent pricing, booking, logistics, reports"],
-        ["Details", "Insurance, carriers, geography, cargo types"],
-        ["Comparison", "Before Trainsit vs With Trainsit"],
-        ["CTA", "Route user to /get-a-quote"],
-      ],
+      title: "Solutions — Desktop Wireframe",
+      type: "solutions",
+      note: "Purpose: support evaluator and enterprise-buyer logic with clearer explanation of capabilities, operational fit, and value compared with traditional freight workflows.",
     },
     {
-      title: "About / Contact",
-      blocks: [
-        ["About Hero", "Story, positioning, mission"],
-        ["About Body", "Team, technology approach, CTA"],
-        ["Contact Form", "Name, email, company, message, anti-bot protection"],
-        ["Contact Details", "Direct contact options"],
-      ],
+      title: "About — Desktop Wireframe",
+      type: "about",
+      note: "Purpose: provide company story, positioning, team credibility, and category narrative without bloating the homepage.",
+    },
+    {
+      title: "Contact — Desktop Wireframe",
+      type: "contact",
+      note: "Purpose: act as a secondary conversion path for buyers who are not ready to use the quote flow or need direct contact with the team.",
     },
   ];
 
@@ -373,10 +801,7 @@ export default function TrainsitBlueprintWebsite() {
 
         <section id="roles" className="border-b border-white/10">
           <div className="mx-auto max-w-7xl px-6 py-16 lg:px-10 lg:py-24">
-            <SectionHeader
-              eyebrow="1. User Roles"
-              title="Who uses the website and what each role needs from it."
-            />
+            <SectionHeader eyebrow="1. User Roles" title="Who uses the website and what each role needs from it." />
             <div className="mt-10">
               <SimpleTable columns={["Role", "Who this is", "What they want on the site"]} rows={roleRows} />
             </div>
@@ -385,10 +810,7 @@ export default function TrainsitBlueprintWebsite() {
 
         <section id="journeys" className="border-b border-white/10">
           <div className="mx-auto max-w-7xl px-6 py-16 lg:px-10 lg:py-24">
-            <SectionHeader
-              eyebrow="2. Key Journeys"
-              title="Primary paths through the website."
-            />
+            <SectionHeader eyebrow="2. Key Journeys" title="Primary paths through the website." />
             <div className="mt-10 grid gap-6 lg:grid-cols-2 xl:grid-cols-3">
               {journeys.map((item) => (
                 <JourneyFlow key={item.title} title={item.title} steps={item.steps} />
@@ -399,10 +821,7 @@ export default function TrainsitBlueprintWebsite() {
 
         <section id="features" className="border-b border-white/10">
           <div className="mx-auto max-w-7xl px-6 py-16 lg:px-10 lg:py-24">
-            <SectionHeader
-              eyebrow="3. Features"
-              title="What is included in Phase 1 and what stays out."
-            />
+            <SectionHeader eyebrow="3. Features" title="What is included in Phase 1 and what stays out." />
             <div className="mt-10 grid gap-6 xl:grid-cols-[1.3fr_0.7fr]">
               <div>
                 <div className="mb-4 text-lg font-semibold text-white">Included in Phase 1</div>
@@ -421,22 +840,13 @@ export default function TrainsitBlueprintWebsite() {
 
         <section id="sitemap" className="border-b border-white/10">
           <div className="mx-auto max-w-7xl px-6 py-16 lg:px-10 lg:py-24">
-            <SectionHeader
-              eyebrow="4. Sitemap"
-              title="Recommended website structure."
-            />
+            <SectionHeader eyebrow="4. Sitemap" title="Recommended website structure." />
             <div className="mt-10 grid gap-6 xl:grid-cols-[0.9fr_1.1fr]">
               <SimpleTable columns={["Route", "Page"]} rows={sitemapRows} />
               <div className="space-y-6">
-                <InfoCard title="Header navigation" tone="accent">
-                  Home · Solutions · Get a Quote · About · Contact · Login → app.trainsit.com
-                </InfoCard>
-                <InfoCard title="Footer navigation">
-                  All primary pages + FAQ + Privacy + Terms + social links.
-                </InfoCard>
-                <InfoCard title="Mobile navigation">
-                  Burger menu. Get a Quote and Login should remain highly visible.
-                </InfoCard>
+                <InfoCard title="Header navigation" tone="accent">Home · Solutions · Get a Quote · About · Contact · Login → app.trainsit.com</InfoCard>
+                <InfoCard title="Footer navigation">All primary pages + FAQ + Privacy + Terms + social links.</InfoCard>
+                <InfoCard title="Mobile navigation">Burger menu. Get a Quote and Login should remain highly visible.</InfoCard>
               </div>
             </div>
           </div>
@@ -446,12 +856,12 @@ export default function TrainsitBlueprintWebsite() {
           <div className="mx-auto max-w-7xl px-6 py-16 lg:px-10 lg:py-24">
             <SectionHeader
               eyebrow="5. Wireframes"
-              title="Core page structure before visual design polish."
-              text="These previews show what belongs on each page and in what order."
+              title="Full-page low-fidelity wireframes"
+              text="These are actual page-level wireframe previews: white artboards with full page composition, section spacing, content hierarchy, forms, cards, CTA areas, and footer structure."
             />
-            <div className="mt-10 grid gap-6 lg:grid-cols-2">
+            <div className="mt-10 space-y-8">
               {wireframes.map((item) => (
-                <WireframePreview key={item.title} title={item.title} blocks={item.blocks} />
+                <WireframePreview key={item.title} title={item.title} type={item.type} note={item.note} />
               ))}
             </div>
           </div>
@@ -459,35 +869,21 @@ export default function TrainsitBlueprintWebsite() {
 
         <section id="architecture" className="border-b border-white/10">
           <div className="mx-auto max-w-7xl px-6 py-16 lg:px-10 lg:py-24">
-            <SectionHeader
-              eyebrow="6. Technical Architecture"
-              title="Website-to-app handoff model."
-              text="The website remains a marketing and quote-entry layer. Product workflows stay on app.trainsit.com."
-            />
-
+            <SectionHeader eyebrow="6. Technical Architecture" title="Website-to-app handoff model." text="The website remains a marketing and quote-entry layer. Product workflows stay on app.trainsit.com." />
             <div className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-5">
               {architectureLayers.map((item) => (
-                <InfoCard key={item.title} title={item.title} tone={item.title === "Get a Quote UI" ? "accent" : "default"}>
-                  {item.text}
-                </InfoCard>
+                <InfoCard key={item.title} title={item.title} tone={item.title === "Get a Quote UI" ? "accent" : "default"}>{item.text}</InfoCard>
               ))}
             </div>
-
             <div className="mt-8 grid gap-6 xl:grid-cols-[1fr_1fr]">
               <div>
                 <div className="mb-4 text-lg font-semibold text-white">What Trainsit dev team must provide for Get a Quote</div>
                 <SimpleTable columns={["Need", "Why it matters"]} rows={apiNeedRows} />
               </div>
               <div className="space-y-6">
-                <InfoCard title="Recommended website platform" tone="accent">
-                  Webflow is the leaner choice for this scope: fast visual build, managed hosting, CMS for FAQ/blog, and sufficient flexibility for one API-driven quote/search integration.
-                </InfoCard>
-                <InfoCard title="Division of responsibility">
-                  trainsit.com owns marketing, content, SEO, analytics, contact, and Get a Quote UI. app.trainsit.com owns dashboard, reports, booking, logistics management, registration, and login.
-                </InfoCard>
-                <InfoCard title="Routing logic">
-                  Quote results can be shown on the website, but booking and authenticated continuation should always route into the app.
-                </InfoCard>
+                <InfoCard title="Recommended website platform" tone="accent">Webflow is the leaner choice for this scope: fast visual build, managed hosting, CMS for FAQ/blog, and sufficient flexibility for one API-driven quote/search integration.</InfoCard>
+                <InfoCard title="Division of responsibility">trainsit.com owns marketing, content, SEO, analytics, contact, and Get a Quote UI. app.trainsit.com owns dashboard, reports, booking, logistics management, registration, and login.</InfoCard>
+                <InfoCard title="Routing logic">Quote results can be shown on the website, but booking and authenticated continuation should always route into the app.</InfoCard>
               </div>
             </div>
           </div>
@@ -495,16 +891,11 @@ export default function TrainsitBlueprintWebsite() {
 
         <section id="estimate" className="border-b border-white/10">
           <div className="mx-auto max-w-7xl px-6 py-16 lg:px-10 lg:py-24">
-            <SectionHeader
-              eyebrow="7. What must be decided before start"
-              title="Pre-start decisions and rollout frame."
-            />
+            <SectionHeader eyebrow="7. What must be decided before start" title="Pre-start decisions and rollout frame." />
             <div className="mt-10 grid gap-6 xl:grid-cols-[1.25fr_0.75fr]">
               <SimpleTable columns={["#", "Decision", "Owner", "When"]} rows={decisionRows} />
               <div className="space-y-6">
-                <InfoCard title="Estimate" tone="accent">
-                  <span className="text-2xl font-semibold text-white">84–125 hours</span>
-                </InfoCard>
+                <InfoCard title="Estimate" tone="accent"><span className="text-2xl font-semibold text-white">84–125 hours</span></InfoCard>
                 <InfoCard title="Timeline">
                   <div className="space-y-2">
                     {timeline.map((item) => (
@@ -512,9 +903,7 @@ export default function TrainsitBlueprintWebsite() {
                     ))}
                   </div>
                 </InfoCard>
-                <InfoCard title="Delivery assumption">
-                  5 weeks is realistic only if scope stays lean, API clarifications arrive early, and stakeholder response time stays fast.
-                </InfoCard>
+                <InfoCard title="Delivery assumption">5 weeks is realistic only if scope stays lean, API clarifications arrive early, and stakeholder response time stays fast.</InfoCard>
               </div>
             </div>
           </div>
