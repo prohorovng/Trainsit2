@@ -1,14 +1,12 @@
-# Trainsit Website Blueprint — Vercel Ready
+# Trainsit Discovery Update — Vercel Ready
 
 ## Files
-- `index.html` — full blueprint site
+- `index.html` — updated discovery site
 - `vercel.json` — minimal Vercel config
 
 ## Deploy via GitHub + Vercel
-1. Create a new GitHub repository.
-2. Upload the contents of this folder to the repository root.
-3. In Vercel, click **Add New → Project**.
-4. Import the GitHub repository.
-5. Click **Deploy**.
+1. Upload these files to the root of a GitHub repository.
+2. In Vercel, import that repository.
+3. Deploy.
 
 No build step is required. This is a static HTML site.

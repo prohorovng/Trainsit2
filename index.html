@@ -3,509 +3,130 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Trainsit — Website Blueprint</title>
-  <meta name="description" content="Trainsit website blueprint: roles, journeys, scope, sitemap, wireframes, technical architecture, dependencies, estimate, and rollout plan." />
+  <title>Trainsit — Discovery Update</title>
+  <meta name="description" content="Updated discovery for the Trainsit website based on answered blockers and confirmed integration decisions." />
   <style>
     :root {
-      --bg: #0b0f16;
-      --panel: #101723;
-      --panel-2: #121c2b;
-      --panel-3: #0f1622;
-      --text: #edf2f7;
-      --muted: #9aa8bc;
-      --line: #1f2a3a;
-      --line-2: #2b3647;
+      --bg: #0b1020;
+      --panel: #11192a;
+      --panel-2: #152136;
+      --line: #233248;
+      --text: #edf3fb;
+      --muted: #9eb0c8;
       --accent: #7dd3fc;
       --accent-2: #38bdf8;
-      --white: #ffffff;
-      --canvas: #f6f7f9;
-      --canvas-line: #d8dce2;
-      --canvas-line-2: #c9ced7;
-      --success: #4ade80;
-      --warning: #f59e0b;
+      --ok: #4ade80;
+      --warn: #f59e0b;
       --danger: #fb7185;
-      --shadow: 0 24px 70px rgba(0, 0, 0, .28);
-      --radius-xl: 30px;
+      --container: 1240px;
+      --radius-xl: 28px;
       --radius-lg: 22px;
       --radius-md: 16px;
-      --radius-sm: 12px;
-      --container: 1280px;
+      --shadow: 0 24px 60px rgba(0,0,0,.28);
     }
-
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body {
       margin: 0;
-      background: radial-gradient(circle at top, #132033 0%, var(--bg) 32%);
+      font-family: Inter, Arial, sans-serif;
       color: var(--text);
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #16233a 0%, var(--bg) 34%);
     }
-
     a { color: inherit; text-decoration: none; }
-
-    .container {
-      width: min(var(--container), calc(100% - 32px));
-      margin: 0 auto;
-    }
-
+    .container { width: min(var(--container), calc(100% - 32px)); margin: 0 auto; }
     .site-header {
-      position: sticky;
-      top: 0;
-      z-index: 40;
-      background: rgba(11, 15, 22, .78);
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(11,16,32,.82);
       backdrop-filter: blur(14px);
-      border-bottom: 1px solid rgba(255, 255, 255, .06);
+      border-bottom: 1px solid rgba(255,255,255,.06);
     }
-
     .topbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      padding: 16px 0;
+      display:flex; align-items:center; justify-content:space-between; gap:16px; padding:16px 0;
     }
-
-    .brand-kicker {
-      color: var(--accent);
-      font-size: 11px;
-      letter-spacing: .24em;
-      text-transform: uppercase;
-      margin-bottom: 4px;
-    }
-
-    .brand-sub {
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    .nav {
-      display: flex;
-      gap: 18px;
-      flex-wrap: wrap;
-      color: var(--muted);
-      font-size: 14px;
-    }
-
+    .brand-kicker { font-size:11px; text-transform:uppercase; letter-spacing:.24em; color:var(--accent); margin-bottom:4px; }
+    .brand-sub { font-size:14px; color:var(--muted); }
+    .nav { display:flex; gap:18px; flex-wrap:wrap; font-size:14px; color:var(--muted); }
     .nav a:hover { color: var(--text); }
-
-    .hero {
-      padding: 58px 0 28px;
-      border-bottom: 1px solid rgba(255, 255, 255, .06);
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.1fr .9fr;
-      gap: 24px;
-      align-items: start;
-    }
-
+    .hero { padding: 58px 0 30px; border-bottom:1px solid rgba(255,255,255,.06); }
+    .hero-grid { display:grid; grid-template-columns: 1.1fr .9fr; gap:24px; align-items:start; }
     .pill {
-      display: inline-flex;
-      border: 1px solid rgba(125, 211, 252, .25);
-      background: rgba(125, 211, 252, .08);
-      color: var(--accent);
-      border-radius: 999px;
-      padding: 7px 12px;
-      font-size: 11px;
-      letter-spacing: .2em;
-      text-transform: uppercase;
+      display:inline-flex; border:1px solid rgba(125,211,252,.25); background:rgba(125,211,252,.08);
+      color:var(--accent); border-radius:999px; padding:7px 12px; font-size:11px; text-transform:uppercase; letter-spacing:.2em;
     }
-
-    h1 {
-      margin: 18px 0 0;
-      font-size: clamp(38px, 7vw, 72px);
-      line-height: 1.02;
-      letter-spacing: -.03em;
-      max-width: 920px;
-    }
-
-    .lead {
-      max-width: 860px;
-      color: var(--muted);
-      font-size: 18px;
-      line-height: 1.8;
-      margin-top: 20px;
-    }
-
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 28px;
-    }
-
+    h1 { margin:18px 0 0; font-size:clamp(38px,7vw,72px); line-height:1.02; letter-spacing:-.03em; max-width:920px; }
+    .lead { margin-top:20px; font-size:18px; line-height:1.8; color:var(--muted); max-width:860px; }
+    .hero-actions { display:flex; gap:12px; flex-wrap:wrap; margin-top:28px; }
     .btn {
-      border-radius: 16px;
-      padding: 13px 18px;
-      font-size: 14px;
-      font-weight: 600;
-      border: 1px solid rgba(255, 255, 255, .14);
-      color: var(--text);
-      background: transparent;
+      border-radius:16px; padding:13px 18px; font-size:14px; font-weight:600;
+      border:1px solid rgba(255,255,255,.14); color:var(--text); background:transparent;
     }
-
-    .btn.primary {
-      background: var(--white);
-      color: #0c1520;
-      border-color: var(--white);
-    }
-
+    .btn.primary { background:#fff; color:#10192a; border-color:#fff; }
     .stat-panel {
       background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
-      border: 1px solid rgba(255, 255, 255, .08);
-      border-radius: var(--radius-xl);
-      padding: 22px;
-      box-shadow: var(--shadow);
+      border: 1px solid rgba(255,255,255,.08); border-radius: var(--radius-xl); padding: 22px; box-shadow: var(--shadow);
     }
-
-    .stat-panel h3 {
-      margin: 0 0 14px;
-      font-size: 14px;
-      color: var(--text);
-    }
-
+    .stat-panel h3 { margin:0 0 14px; font-size:14px; }
     .principle {
-      padding: 14px 16px;
-      border-radius: 16px;
-      border: 1px solid rgba(255,255,255,.08);
-      background: rgba(0,0,0,.18);
-      margin-bottom: 12px;
+      border:1px solid rgba(255,255,255,.08); background: rgba(0,0,0,.16); border-radius:16px; padding:14px 16px; margin-bottom:12px;
     }
-
-    .principle-title {
-      font-size: 14px;
-      font-weight: 600;
-      margin-bottom: 6px;
-    }
-
-    .principle-text {
-      font-size: 14px;
-      color: var(--muted);
-      line-height: 1.7;
-    }
-
-    .section {
-      padding: 38px 0;
-      border-bottom: 1px solid rgba(255,255,255,.06);
-    }
-
-    .eyebrow {
-      color: var(--accent);
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: .24em;
-      margin-bottom: 10px;
-    }
-
-    h2 {
-      margin: 0;
-      font-size: clamp(28px, 4.2vw, 46px);
-      line-height: 1.08;
-      letter-spacing: -.02em;
-    }
-
-    .section-intro {
-      max-width: 920px;
-      color: var(--muted);
-      font-size: 16px;
-      line-height: 1.8;
-      margin-top: 14px;
-    }
-
-    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
-    .grid-main { display: grid; grid-template-columns: 1.25fr .75fr; gap: 20px; }
-    .grid-side { display: grid; grid-template-columns: .95fr 1.05fr; gap: 20px; }
-
+    .principle-title { font-size:14px; font-weight:600; margin-bottom:6px; }
+    .principle-text { font-size:14px; color:var(--muted); line-height:1.7; }
+    .section { padding:40px 0; border-bottom:1px solid rgba(255,255,255,.06); }
+    .eyebrow { font-size:11px; text-transform:uppercase; letter-spacing:.24em; color:var(--accent); margin-bottom:10px; }
+    h2 { margin:0; font-size:clamp(28px,4vw,46px); line-height:1.08; letter-spacing:-.02em; }
+    .section-intro { margin-top:14px; max-width:900px; color:var(--muted); font-size:16px; line-height:1.8; }
+    .grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+    .grid-3 { display:grid; grid-template-columns:repeat(3, 1fr); gap:20px; }
+    .grid-main { display:grid; grid-template-columns:1.15fr .85fr; gap:20px; }
     .card {
       background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.02));
-      border: 1px solid rgba(255,255,255,.08);
-      border-radius: var(--radius-lg);
-      padding: 20px;
+      border:1px solid rgba(255,255,255,.08); border-radius:var(--radius-lg); padding:20px;
     }
-
-    .card h3 {
-      margin: 0;
-      font-size: 20px;
-      line-height: 1.2;
-    }
-
-    .card p, .card li {
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.75;
-    }
-
+    .card h3 { margin:0; font-size:20px; line-height:1.2; }
+    .card p, .card li { color:var(--muted); font-size:14px; line-height:1.75; }
     .accent-card {
       background: linear-gradient(180deg, rgba(56,189,248,.10), rgba(56,189,248,.04));
-      border: 1px solid rgba(125, 211, 252, .18);
+      border:1px solid rgba(125,211,252,.18);
     }
-
-    .number-badge {
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(125, 211, 252, .14);
-      color: var(--accent);
-      font-size: 12px;
-      font-weight: 700;
-      margin-right: 10px;
-      flex: none;
+    .status-list { display:grid; gap:12px; margin-top:16px; }
+    .status-item {
+      border-radius:16px; border:1px solid rgba(255,255,255,.08); background: rgba(0,0,0,.16); padding:14px 16px;
+      color:var(--muted); font-size:14px; line-height:1.75;
     }
-
-    .journey-step {
-      display: flex;
-      gap: 12px;
-      align-items: flex-start;
-      padding: 12px 0;
-      border-top: 1px solid rgba(255,255,255,.06);
-    }
-
-    .journey-step:first-of-type { border-top: none; }
-
+    .status-item strong { color: var(--text); }
+    .status-item.ok { border-color: rgba(74,222,128,.25); }
+    .status-item.warn { border-color: rgba(245,158,11,.24); }
+    .status-item.danger { border-color: rgba(251,113,133,.24); }
     .table-wrap {
-      overflow-x: auto;
-      border-radius: var(--radius-lg);
-      border: 1px solid rgba(255,255,255,.08);
+      overflow-x:auto; border-radius:var(--radius-lg); border:1px solid rgba(255,255,255,.08);
       background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.02));
     }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      min-width: 760px;
-    }
-
+    table { width:100%; border-collapse:collapse; min-width:760px; }
     th, td {
-      padding: 16px 18px;
-      text-align: left;
-      vertical-align: top;
-      border-bottom: 1px solid rgba(255,255,255,.06);
-      font-size: 14px;
-      line-height: 1.7;
+      padding:16px 18px; text-align:left; vertical-align:top; border-bottom:1px solid rgba(255,255,255,.06);
+      font-size:14px; line-height:1.7;
     }
-
-    th {
-      color: var(--text);
-      background: rgba(0,0,0,.22);
-      font-weight: 600;
+    th { background: rgba(0,0,0,.22); color:var(--text); font-weight:600; }
+    td { color:var(--muted); }
+    tr:last-child td { border-bottom:none; }
+    .badge {
+      display:inline-flex; align-items:center; gap:8px; font-size:12px; letter-spacing:.08em; text-transform:uppercase;
+      border-radius:999px; padding:7px 10px; border:1px solid rgba(255,255,255,.1); color:var(--muted);
     }
-
-    td { color: var(--muted); }
-    tr:last-child td { border-bottom: none; }
-
-    .route-list {
-      display: grid;
-      gap: 12px;
-      margin-top: 18px;
-    }
-
-    .route-item {
-      border-radius: 16px;
-      border: 1px solid rgba(255,255,255,.08);
-      background: rgba(0,0,0,.18);
-      padding: 14px 16px;
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.7;
-    }
-
-    .estimate {
-      font-size: 30px;
-      font-weight: 700;
-      line-height: 1.1;
-      color: var(--text);
-    }
-
-    .timeline {
-      display: grid;
-      gap: 10px;
-    }
-
-    .timeline-item {
-      border-radius: 16px;
-      border: 1px solid rgba(255,255,255,.08);
-      background: rgba(0,0,0,.16);
-      padding: 14px 16px;
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.7;
-    }
-
-    /* Wireframes */
-    .wireframes {
-      display: grid;
-      gap: 34px;
-      margin-top: 28px;
-    }
-
-    .wireframe-card {
-      background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.02));
-      border: 1px solid rgba(255,255,255,.08);
-      border-radius: var(--radius-lg);
-      padding: 20px;
-    }
-
-    .wireframe-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 16px;
-      margin-bottom: 16px;
-    }
-
-    .wireframe-title {
-      margin: 0;
-      font-size: 22px;
-      line-height: 1.2;
-    }
-
-    .wireframe-meta {
-      margin-top: 6px;
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .wireframe-tag {
-      color: var(--muted);
-      border: 1px solid rgba(255,255,255,.1);
-      border-radius: 999px;
-      padding: 7px 12px;
-      font-size: 11px;
-      letter-spacing: .16em;
-      text-transform: uppercase;
-      white-space: nowrap;
-    }
-
-    .artboard-wrap {
-      background: #fff;
-      border: 1px solid var(--canvas-line-2);
-      border-radius: var(--radius-xl);
-      overflow: hidden;
-      box-shadow: var(--shadow);
-    }
-
-    .browser-bar {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 14px 18px;
-      border-bottom: 1px solid var(--canvas-line-2);
-      background: #fff;
-    }
-
-    .dot { width: 10px; height: 10px; border-radius: 50%; background: #d3d7de; }
-    .address { height: 34px; border: 1px solid #dfe3e9; background: #fafafa; border-radius: 12px; flex: 1; margin-left: 10px; }
-
-    .artboard {
-      background: var(--canvas);
-      padding: 24px;
-    }
-
-    .page {
-      width: 100%;
-      max-width: 1200px;
-      margin: 0 auto;
-      display: grid;
-      gap: 18px;
-    }
-
-    .wf-section {
-      background: #fff;
-      border: 1px solid var(--canvas-line);
-      border-radius: 24px;
-      padding: 20px;
-    }
-
-    .wf-grid-2 { display: grid; gap: 18px; grid-template-columns: 1fr 1fr; }
-    .wf-grid-3 { display: grid; gap: 18px; grid-template-columns: repeat(3, 1fr); }
-    .wf-grid-4 { display: grid; gap: 18px; grid-template-columns: repeat(4, 1fr); }
-    .wf-grid-sidebar { display: grid; gap: 18px; grid-template-columns: 1.15fr .85fr; }
-    .wf-grid-hero { display: grid; gap: 18px; grid-template-columns: 1.05fr .95fr; }
-
-    .wf-header { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 18px 20px; }
-    .wf-nav { display: flex; align-items: center; gap: 12px; }
-    .wf-stack { display: flex; flex-direction: column; gap: 10px; }
-    .wf-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
-
-    .line { height: 12px; border-radius: 999px; background: #d8dde4; }
-    .line.sm { height: 10px; }
-    .line.lg { height: 16px; }
-    .line.xxl { height: 34px; }
-
-    .box {
-      border: 1px solid var(--canvas-line);
-      background: #fff;
-      border-radius: 18px;
-      min-height: 60px;
-      padding: 16px;
-    }
-
-    .box.soft { background: #fafbfc; }
-    .box.image { background: #f1f3f5; min-height: 140px; }
-    .box.tall { min-height: 220px; }
-    .btn-wire { height: 42px; width: 132px; border: 1px solid #bfc6d1; background: #f4f5f7; border-radius: 14px; }
-    .chip { height: 34px; width: 84px; border: 1px solid #d0d6dd; background: #fafafa; border-radius: 12px; }
-    .icon { width: 42px; height: 42px; border-radius: 14px; border: 1px solid var(--canvas-line); background: #f2f4f6; }
-
-    .field {
-      border: 1px solid var(--canvas-line);
-      background: #fff;
-      border-radius: 16px;
-      padding: 14px;
-    }
-
-    .field-input {
-      margin-top: 12px;
-      height: 42px;
-      border: 1px solid #e2e5ea;
-      background: #fafafa;
-      border-radius: 12px;
-    }
-
-    .field-input.tall { height: 110px; }
-
-    .wf-note {
-      margin-top: 14px;
-      padding: 14px 16px;
-      border-radius: 16px;
-      border: 1px solid rgba(255,255,255,.08);
-      background: rgba(0,0,0,.18);
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.7;
-    }
-
-    .footer {
-      padding: 34px 0 54px;
-      color: var(--muted);
-      font-size: 13px;
-    }
-
+    .badge.ok { color:#86efac; border-color: rgba(74,222,128,.26); }
+    .badge.warn { color:#fcd34d; border-color: rgba(245,158,11,.28); }
+    .badge.danger { color:#fda4af; border-color: rgba(251,113,133,.28); }
+    .footer { padding:34px 0 54px; color:var(--muted); font-size:13px; }
     @media (max-width: 1100px) {
-      .hero-grid, .grid-main, .grid-side, .grid-3, .grid-4, .grid-2,
-      .wf-grid-4, .wf-grid-3, .wf-grid-sidebar, .wf-grid-hero, .wf-grid-2 {
-        grid-template-columns: 1fr;
-      }
+      .hero-grid, .grid-2, .grid-3, .grid-main { grid-template-columns:1fr; }
     }
-
     @media (max-width: 760px) {
-      .container { width: min(var(--container), calc(100% - 20px)); }
-      .nav { display: none; }
-      .topbar { padding: 14px 0; }
-      .hero { padding-top: 42px; }
-      .hero-actions { margin-top: 22px; }
-      .wireframe-head { flex-direction: column; }
-      .browser-bar { padding: 12px; }
-      .address { height: 28px; }
-      .artboard { padding: 14px; }
-      .wireframe-card, .card { padding: 16px; }
-      th, td { padding: 12px 14px; }
+      .container { width:min(var(--container), calc(100% - 20px)); }
+      .nav { display:none; }
+      .topbar { padding:14px 0; }
+      .hero { padding-top:42px; }
+      .card { padding:16px; }
+      th, td { padding:12px 14px; }
     }
   </style>
 </head>
@@ -514,17 +135,17 @@
     <div class="container topbar">
       <div>
         <div class="brand-kicker">Trainsit</div>
-        <div class="brand-sub">Website Blueprint — Vercel-ready HTML</div>
+        <div class="brand-sub">Discovery Update — Vercel-ready HTML</div>
       </div>
       <nav class="nav">
         <a href="#overview">Overview</a>
+        <a href="#resolved">Resolved</a>
         <a href="#roles">Roles</a>
         <a href="#journeys">Journeys</a>
-        <a href="#features">Features</a>
-        <a href="#sitemap">Sitemap</a>
-        <a href="#wireframes">Wireframes</a>
+        <a href="#scope">Functional Scope</a>
         <a href="#architecture">Architecture</a>
-        <a href="#decisions">Decisions</a>
+        <a href="#dependencies">Dependencies</a>
+        <a href="#open-items">Open Items</a>
       </nav>
     </div>
   </header>
@@ -532,32 +153,62 @@
   <section class="hero" id="overview">
     <div class="container hero-grid">
       <div>
-        <div class="pill">Discovery output formatted as a website</div>
-        <h1>A clear, validated website blueprint for Trainsit’s next-stage digital presence.</h1>
-        <p class="lead">This blueprint translates the brief into a delivery-ready website structure: who the site serves, what journeys matter, which features belong in Phase 1, how the site should route users into app.trainsit.com, what the page structure should be, what API inputs are required, and what effort fits the initial rollout.</p>
+        <div class="pill">Updated after answered blockers</div>
+        <h1>Trainsit discovery, updated with confirmed integration decisions.</h1>
+        <p class="lead">This version removes assumptions that are no longer needed, converts answered questions into confirmed delivery decisions, and narrows the discovery from general website strategy to a concrete website + Get a Quote + app handoff implementation path.</p>
         <div class="hero-actions">
-          <a class="btn primary" href="#roles">View roles</a>
-          <a class="btn" href="#wireframes">Open wireframes</a>
-          <a class="btn" href="#decisions">Review dependencies</a>
+          <a class="btn primary" href="#resolved">View confirmed decisions</a>
+          <a class="btn" href="#architecture">Open architecture</a>
+          <a class="btn" href="#open-items">Check remaining open items</a>
         </div>
       </div>
       <div class="stat-panel">
-        <h3>Confirmed strategic frame</h3>
+        <h3>What changed in discovery</h3>
         <div class="principle">
-          <div class="principle-title">Dual-purpose website</div>
-          <div class="principle-text">The website must work as both a trust-building marketing layer and a gateway into the freight platform.</div>
+          <div class="principle-title">Scope is now fixed</div>
+          <div class="principle-text">The website integrates only Get a Quote. Dashboard, reports, booking, and logistics workflows stay on app.trainsit.com.</div>
         </div>
         <div class="principle">
-          <div class="principle-title">Platform-first conversion</div>
-          <div class="principle-text">The site explains the product, but the main conversion still happens through app.trainsit.com.</div>
+          <div class="principle-title">Authentication stays in the app</div>
+          <div class="principle-text">The website does not need its own registration or login flow for Phase 1.</div>
         </div>
         <div class="principle">
-          <div class="principle-title">Lean website scope</div>
-          <div class="principle-text">The site should handle marketing, SEO, content, contact, and one controlled quote/search entry point — not full product workflows.</div>
+          <div class="principle-title">Quote API is confirmed</div>
+          <div class="principle-text">The public quote endpoint exists, is documented, and does not require authentication to search.</div>
         </div>
         <div class="principle">
-          <div class="principle-title">API-dependent quote experience</div>
-          <div class="principle-text">The only meaningful website-side integration is Get a Quote, which depends on a working API contract from the Trainsit dev team.</div>
+          <div class="principle-title">Discovery focus shifted</div>
+          <div class="principle-text">The remaining work is no longer about choosing the overall model. It is now about flow detail, API mapping, edge cases, and UX states.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="resolved">
+    <div class="container">
+      <div class="eyebrow">1. Confirmed decisions</div>
+      <h2>What is already decided and should be treated as fixed in discovery.</h2>
+      <div class="section-intro">These items should no longer stay in the document as open questions. They are now confirmed product and delivery constraints.</div>
+      <div class="grid-2" style="margin-top:24px;">
+        <div class="card accent-card">
+          <h3>Resolved integration baseline</h3>
+          <div class="status-list">
+            <div class="status-item ok"><strong>Website scope:</strong> only Get a Quote is integrated on the website.</div>
+            <div class="status-item ok"><strong>Product scope:</strong> dashboard, reports, booking, and logistics management remain on <code>app.trainsit.com</code>.</div>
+            <div class="status-item ok"><strong>Authentication:</strong> handled only by the app.</div>
+            <div class="status-item ok"><strong>Platform:</strong> Webflow is accepted for the website.</div>
+            <div class="status-item ok"><strong>Domain:</strong> the website will use <code>trainsit.com</code>.</div>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Resolved API baseline</h3>
+          <div class="status-list">
+            <div class="status-item ok"><strong>Quote endpoint exists:</strong> <code>https://api.trainsit.com/api/v1/shipping/quotes</code>.</div>
+            <div class="status-item ok"><strong>Docs exist:</strong> full docs are available on the Trainsit API docs site.</div>
+            <div class="status-item ok"><strong>Public quote search:</strong> no authentication required.</div>
+            <div class="status-item warn"><strong>Expected quote latency:</strong> 3–15 seconds.</div>
+            <div class="status-item ok"><strong>No-route fallback direction:</strong> use a “Request This Route” form.</div>
+          </div>
         </div>
       </div>
     </div>
@@ -565,33 +216,32 @@
 
   <section class="section" id="roles">
     <div class="container">
-      <div class="eyebrow">1. User roles</div>
-      <h2>Who uses the website and what each role needs from it.</h2>
-      <div class="section-intro">The site supports three main user states: first-time discovery, enterprise evaluation, and existing platform access.</div>
-      <div class="table-wrap" style="margin-top:24px">
+      <div class="eyebrow">2. User roles</div>
+      <h2>Who the updated discovery is actually designing for.</h2>
+      <div class="table-wrap" style="margin-top:24px;">
         <table>
           <thead>
             <tr>
               <th>Role</th>
               <th>Who this is</th>
-              <th>What they want on the site</th>
+              <th>Primary need on the website</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td><strong>New visitor</strong></td>
-              <td>First-time user coming from Google, LinkedIn, conference, or direct referral</td>
-              <td>Understand what Trainsit is, validate value, check route / quote path, then register or continue into platform</td>
+              <td>First-time user arriving from search, social, conference, referral, or direct URL</td>
+              <td>Understand the offer, run a quote, then continue into the app only when ready</td>
             </tr>
             <tr>
               <td><strong>Evaluator</strong></td>
-              <td>Logistics lead, decision-maker, or enterprise buyer comparing vendors</td>
-              <td>Check credibility, understand capabilities, see insurance / coverage / operations, then contact sales or continue deeper</td>
+              <td>Buyer, logistics lead, or stakeholder validating whether Trainsit is credible and relevant</td>
+              <td>Understand platform capabilities, coverage, insurance, and operating model</td>
             </tr>
             <tr>
               <td><strong>Existing user</strong></td>
-              <td>User who already has an account on app.trainsit.com</td>
-              <td>Reach dashboard or existing workflow as quickly as possible</td>
+              <td>User with an account on <code>app.trainsit.com</code></td>
+              <td>Use website navigation only as an entry point and get to the app fast</td>
             </tr>
           </tbody>
         </table>
@@ -601,344 +251,173 @@
 
   <section class="section" id="journeys">
     <div class="container">
-      <div class="eyebrow">2. Key journeys</div>
-      <h2>Primary paths through the website.</h2>
-      <div class="grid-3" style="margin-top:24px">
+      <div class="eyebrow">3. Key journeys</div>
+      <h2>Journeys after the blocker answers.</h2>
+      <div class="grid-3" style="margin-top:24px;">
         <div class="card accent-card">
-          <h3>Journey 1 — New visitor → platform registration / quote flow</h3>
-          <div class="journey-step"><div class="number-badge">1</div><div>Homepage: hero, positioning, and value proposition.</div></div>
-          <div class="journey-step"><div class="number-badge">2</div><div>How it works: 3-step explanation.</div></div>
-          <div class="journey-step"><div class="number-badge">3</div><div>User clicks Get a Quote.</div></div>
-          <div class="journey-step"><div class="number-badge">4</div><div>User enters origin, destination, and date.</div></div>
-          <div class="journey-step"><div class="number-badge">5</div><div>If route exists: show route, ETA, and price → CTA to Book / continue on app.trainsit.com.</div></div>
-          <div class="journey-step"><div class="number-badge">6</div><div>If no result: show unavailable route state → prompt contact / sales fallback.</div></div>
-          <div class="journey-step"><div class="number-badge">7</div><div>On app.trainsit.com: unauthenticated user registers, authenticated user continues into dashboard or booking path.</div></div>
+          <h3>Journey 1 — New visitor → quote → app handoff</h3>
+          <ul>
+            <li>User lands on the homepage.</li>
+            <li>User understands the proposition and clicks Get a Quote.</li>
+            <li>User enters route details on the website.</li>
+            <li>Website calls the quote API and renders loading + result states.</li>
+            <li>User clicks Book on a chosen quote option.</li>
+            <li>User is redirected to <code>https://app.trainsit.com/login?option_id={option_id}</code>.</li>
+            <li>App handles login / registration and then continues the flow.</li>
+          </ul>
         </div>
         <div class="card">
-          <h3>Journey 2 — Evaluator → contact / sales conversation</h3>
-          <div class="journey-step"><div class="number-badge">1</div><div>Homepage.</div></div>
-          <div class="journey-step"><div class="number-badge">2</div><div>Solutions page: capabilities, coverage, insurance, operations.</div></div>
-          <div class="journey-step"><div class="number-badge">3</div><div>About page: team, story, positioning.</div></div>
-          <div class="journey-step"><div class="number-badge">4</div><div>FAQ.</div></div>
-          <div class="journey-step"><div class="number-badge">5</div><div>Contact page or sales handoff.</div></div>
+          <h3>Journey 2 — Evaluator → validation → contact</h3>
+          <ul>
+            <li>User reviews homepage, Solutions, About, and FAQ.</li>
+            <li>User validates scope, supported routes, operational logic, and trust indicators.</li>
+            <li>User either contacts the team or moves into Get a Quote.</li>
+          </ul>
         </div>
         <div class="card">
-          <h3>Journey 3 — Existing user → dashboard</h3>
-          <div class="journey-step"><div class="number-badge">1</div><div>User clicks Login in header.</div></div>
-          <div class="journey-step"><div class="number-badge">2</div><div>User is redirected to app.trainsit.com.</div></div>
-          <div class="journey-step"><div class="number-badge">3</div><div>App handles auth and dashboard access.</div></div>
+          <h3>Journey 3 — Existing user → login → dashboard</h3>
+          <ul>
+            <li>User clicks Login or Dashboard on the website.</li>
+            <li>User is routed to the app.</li>
+            <li>App already handles logged-in vs not-logged-in logic.</li>
+          </ul>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="section" id="features">
+  <section class="section" id="scope">
     <div class="container">
-      <div class="eyebrow">3. Features</div>
-      <h2>What is included in Phase 1 and what stays out.</h2>
-      <div class="grid-main" style="margin-top:24px">
-        <div>
-          <div class="table-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Feature</th>
-                  <th>Hours</th>
-                  <th>Notes</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr><td>1</td><td><strong>Homepage</strong> — hero, value proposition, how it works, CTA</td><td>16–20</td><td>Primary marketing page</td></tr>
-                <tr><td>2</td><td><strong>Solutions</strong> — platform capabilities, coverage, insurance, operations</td><td>8–12</td><td>Content needed from Trainsit</td></tr>
-                <tr><td>3</td><td><strong>About</strong> — mission, team, story, approach</td><td>6–8</td><td></td></tr>
-                <tr><td>4</td><td><strong>Contact</strong> — form with anti-bot protection</td><td>4–6</td><td>Honeypot + reCAPTCHA or equivalent</td></tr>
-                <tr><td>5</td><td><strong>Get a Quote</strong> — search form → API request → result state</td><td>15–25</td><td>Requires API contract from Trainsit dev team</td></tr>
-                <tr><td>6</td><td><strong>FAQ</strong> — insurance, logistics, pricing, service</td><td>4–6</td><td>Content needed from Trainsit</td></tr>
-                <tr><td>7</td><td>Navigation + responsive behavior</td><td>6–8</td><td>Desktop and mobile</td></tr>
-                <tr><td>8</td><td>Style guide — colors, typography, core UI</td><td>8–12</td><td>Depends on updated logo / brand direction</td></tr>
-                <tr><td>9</td><td>SEO setup — metadata, sitemap, robots.txt</td><td>3–4</td><td></td></tr>
-                <tr><td>10</td><td>Google Analytics 4</td><td>2–3</td><td></td></tr>
-                <tr><td>11</td><td>Login / Dashboard buttons routed to app.trainsit.com</td><td>2–3</td><td></td></tr>
-                <tr><td>12</td><td>Testing and QA</td><td>6–10</td><td></td></tr>
-                <tr><td>13</td><td>Content migration / content entry</td><td>4–8</td><td></td></tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="card accent-card" style="margin-top:16px">
-            <h3>Phase 1 subtotal</h3>
-            <div class="estimate" style="margin-top:10px">84–125 hours</div>
+      <div class="eyebrow">4. Functional scope</div>
+      <h2>What stays in discovery and what should be removed.</h2>
+      <div class="grid-main" style="margin-top:24px;">
+        <div class="card accent-card">
+          <h3>Keep in discovery</h3>
+          <div class="status-list">
+            <div class="status-item ok"><strong>Homepage</strong> — positioning, value proposition, CTA logic</div>
+            <div class="status-item ok"><strong>Solutions</strong> — capabilities, coverage, insurance, operations</div>
+            <div class="status-item ok"><strong>About</strong> — company story, mission, credibility</div>
+            <div class="status-item ok"><strong>Contact</strong> — support and direct inquiry path</div>
+            <div class="status-item ok"><strong>FAQ</strong> — operational questions and objections</div>
+            <div class="status-item ok"><strong>Get a Quote</strong> — website form, API integration, result states, redirect logic</div>
+            <div class="status-item ok"><strong>Website-to-app handoff</strong> — login redirect, Book redirect, no-route fallback</div>
           </div>
         </div>
-        <div>
-          <div class="card">
-            <h3>Out of scope for Phase 1</h3>
-            <ul>
-              <li><strong>Dashboard / Reports on the website</strong> — already exists on app.trainsit.com. No value in duplicating it on the website.</li>
-              <li><strong>Booking on the website</strong> — requires auth, payment, and deeper product logic. Better routed into the app.</li>
-              <li><strong>Logistics management on the website</strong> — this is product scope, not website scope.</li>
-              <li><strong>Registration / login inside Webflow website</strong> — too heavy and unnecessary if app already handles it correctly.</li>
-            </ul>
-          </div>
-          <div class="card" style="margin-top:16px">
-            <h3>Delivery interpretation</h3>
-            <p>The website is a marketing and access layer. The product remains on app.trainsit.com. The only meaningful website-side integration in Phase 1 is Get a Quote.</p>
+        <div class="card">
+          <h3>Remove from discovery</h3>
+          <div class="status-list">
+            <div class="status-item danger"><strong>Wireframes — Core Pages</strong> — remove this section from the discovery deliverable.</div>
+            <div class="status-item danger"><strong>Scope &amp; Estimate</strong> — remove this section from the discovery deliverable.</div>
+            <div class="status-item warn"><strong>Open debate about platform split</strong> — no longer needed; the split is already confirmed.</div>
+            <div class="status-item warn"><strong>Website-side auth exploration</strong> — no longer needed for Phase 1.</div>
+            <div class="status-item warn"><strong>General architecture optioning</strong> — discovery no longer needs multiple baseline models for Phase 1.</div>
           </div>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" id="sitemap">
-    <div class="container">
-      <div class="eyebrow">4. Sitemap</div>
-      <h2>Recommended website structure.</h2>
-      <div class="grid-side" style="margin-top:24px">
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr><th>Route</th><th>Page</th></tr>
-            </thead>
-            <tbody>
-              <tr><td>/</td><td>Homepage</td></tr>
-              <tr><td>/solutions</td><td>Solutions</td></tr>
-              <tr><td>/about</td><td>About</td></tr>
-              <tr><td>/get-a-quote</td><td>Get a Quote — main API-connected page</td></tr>
-              <tr><td>/contact</td><td>Contact</td></tr>
-              <tr><td>/faq</td><td>FAQ</td></tr>
-              <tr><td>/blog</td><td>Blog — Phase 2, structure only</td></tr>
-              <tr><td>/privacy</td><td>Privacy Policy</td></tr>
-              <tr><td>/terms</td><td>Terms</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <div>
-          <div class="card accent-card">
-            <h3>Header navigation</h3>
-            <p>Home · Solutions · Get a Quote · About · Contact · Login → app.trainsit.com</p>
-          </div>
-          <div class="card" style="margin-top:16px">
-            <h3>Footer navigation</h3>
-            <p>All primary pages + FAQ + Privacy + Terms + social links.</p>
-          </div>
-          <div class="card" style="margin-top:16px">
-            <h3>Mobile navigation</h3>
-            <p>Burger menu. Get a Quote and Login should remain highly visible.</p>
-          </div>
-          <div class="card" style="margin-top:16px">
-            <h3>Core user routes</h3>
-            <div class="route-list">
-              <div class="route-item">Homepage → Get a Quote → result state → app.trainsit.com</div>
-              <div class="route-item">Homepage → Solutions → About → FAQ → Contact</div>
-              <div class="route-item">Header Login → app.trainsit.com dashboard or auth flow</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" id="wireframes">
-    <div class="container">
-      <div class="eyebrow">5. Wireframes</div>
-      <h2>Full-page low-fidelity wireframes</h2>
-      <div class="section-intro">These are actual page-level wireframe previews: white artboards with full page composition, section spacing, content hierarchy, forms, cards, CTA areas, and footer structure.</div>
-
-      <div class="wireframes">
-        <article class="wireframe-card">
-          <div class="wireframe-head">
-            <div>
-              <h3 class="wireframe-title">Homepage — Desktop Wireframe</h3>
-              <div class="wireframe-meta">Full-page wireframe preview</div>
-            </div>
-            <div class="wireframe-tag">Desktop artboard</div>
-          </div>
-          <div class="artboard-wrap">
-            <div class="browser-bar"><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="address"></div></div>
-            <div class="artboard">
-              <div class="page">
-                <div class="wf-section wf-header">
-                  <div class="wf-row"><div class="box soft" style="width:120px;height:44px"></div><div class="wf-nav"><div class="line sm" style="width:54px"></div><div class="line sm" style="width:74px"></div><div class="line sm" style="width:64px"></div><div class="line sm" style="width:56px"></div></div></div>
-                  <div class="wf-row"><div class="line sm" style="width:40px"></div><div class="btn-wire"></div></div>
-                </div>
-                <div class="wf-section wf-grid-hero">
-                  <div class="wf-stack"><div class="line sm" style="width:88px"></div><div class="line xxl" style="width:92%"></div><div class="line xxl" style="width:78%"></div><div class="line lg" style="width:84%"></div><div class="line lg" style="width:72%"></div><div class="wf-row" style="padding-top:8px"><div class="btn-wire"></div><div class="btn-wire" style="width:110px"></div></div></div>
-                  <div class="box image tall"></div>
-                </div>
-                <div class="wf-grid-4">
-                  <div class="wf-section"><div class="icon"></div><div class="line lg" style="width:70px;margin-top:16px"></div><div class="line sm" style="width:100%;margin-top:12px"></div><div class="line sm" style="width:84%;margin-top:10px"></div></div>
-                  <div class="wf-section"><div class="icon"></div><div class="line lg" style="width:70px;margin-top:16px"></div><div class="line sm" style="width:100%;margin-top:12px"></div><div class="line sm" style="width:84%;margin-top:10px"></div></div>
-                  <div class="wf-section"><div class="icon"></div><div class="line lg" style="width:70px;margin-top:16px"></div><div class="line sm" style="width:100%;margin-top:12px"></div><div class="line sm" style="width:84%;margin-top:10px"></div></div>
-                  <div class="wf-section"><div class="icon"></div><div class="line lg" style="width:70px;margin-top:16px"></div><div class="line sm" style="width:100%;margin-top:12px"></div><div class="line sm" style="width:84%;margin-top:10px"></div></div>
-                </div>
-                <div class="wf-section"><div class="wf-row" style="justify-content:space-between;margin-bottom:18px"><div class="wf-stack"><div class="line lg" style="width:130px"></div><div class="line sm" style="width:220px"></div></div><div class="chip"></div></div><div class="wf-grid-3"><div class="box"><div class="box image"></div><div class="line lg" style="width:90px;margin-top:16px"></div><div class="line sm" style="width:100%;margin-top:12px"></div><div class="line sm" style="width:78%;margin-top:10px"></div></div><div class="box"><div class="box image"></div><div class="line lg" style="width:90px;margin-top:16px"></div><div class="line sm" style="width:100%;margin-top:12px"></div><div class="line sm" style="width:78%;margin-top:10px"></div></div><div class="box"><div class="box image"></div><div class="line lg" style="width:90px;margin-top:16px"></div><div class="line sm" style="width:100%;margin-top:12px"></div><div class="line sm" style="width:78%;margin-top:10px"></div></div></div></div>
-                <div class="wf-section wf-grid-sidebar"><div class="wf-stack"><div class="line lg" style="width:110px"></div><div class="line sm" style="width:100%"></div><div class="line sm" style="width:82%"></div><div class="line sm" style="width:64%"></div></div><div class="wf-grid-3"><div class="box"><div class="line sm" style="width:44px"></div><div class="line lg" style="width:64px;margin-top:14px"></div></div><div class="box"><div class="line sm" style="width:44px"></div><div class="line lg" style="width:64px;margin-top:14px"></div></div><div class="box"><div class="line sm" style="width:44px"></div><div class="line lg" style="width:64px;margin-top:14px"></div></div></div></div>
-                <div class="wf-section"><div class="line lg" style="width:84px"></div><div class="wf-stack" style="margin-top:16px"><div class="box soft" style="padding:18px;display:flex;justify-content:space-between;align-items:center"><div class="wf-stack"><div class="line sm" style="width:160px"></div><div class="line sm" style="width:110px"></div></div><div class="line sm" style="width:12px"></div></div><div class="box soft" style="padding:18px;display:flex;justify-content:space-between;align-items:center"><div class="wf-stack"><div class="line sm" style="width:160px"></div><div class="line sm" style="width:110px"></div></div><div class="line sm" style="width:12px"></div></div><div class="box soft" style="padding:18px;display:flex;justify-content:space-between;align-items:center"><div class="wf-stack"><div class="line sm" style="width:160px"></div><div class="line sm" style="width:110px"></div></div><div class="line sm" style="width:12px"></div></div></div></div>
-                <div class="wf-section" style="display:flex;justify-content:space-between;align-items:center;gap:20px"><div class="wf-stack"><div class="line lg" style="width:170px"></div><div class="line sm" style="width:240px"></div></div><div class="btn-wire" style="width:150px"></div></div>
-                <div class="wf-section"><div class="wf-grid-4"><div class="wf-stack"><div class="line lg" style="width:70px"></div><div class="line sm" style="width:90px"></div><div class="line sm" style="width:70px"></div></div><div class="wf-stack"><div class="line lg" style="width:70px"></div><div class="line sm" style="width:90px"></div><div class="line sm" style="width:70px"></div></div><div class="wf-stack"><div class="line lg" style="width:70px"></div><div class="line sm" style="width:90px"></div><div class="line sm" style="width:70px"></div></div><div class="wf-stack"><div class="line lg" style="width:70px"></div><div class="line sm" style="width:90px"></div><div class="line sm" style="width:70px"></div></div></div></div>
-              </div>
-            </div>
-          </div>
-          <div class="wf-note">Purpose: explain the product quickly, build trust, and move users into Get a Quote without forcing them to understand the whole platform first.</div>
-        </article>
-
-        <article class="wireframe-card">
-          <div class="wireframe-head"><div><h3 class="wireframe-title">Get a Quote — Desktop Wireframe</h3><div class="wireframe-meta">Full-page wireframe preview</div></div><div class="wireframe-tag">Desktop artboard</div></div>
-          <div class="artboard-wrap">
-            <div class="browser-bar"><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="address"></div></div>
-            <div class="artboard">
-              <div class="page">
-                <div class="wf-section wf-header"><div class="wf-row"><div class="box soft" style="width:120px;height:44px"></div><div class="wf-nav"><div class="line sm" style="width:60px"></div><div class="line sm" style="width:52px"></div><div class="line sm" style="width:64px"></div></div></div><div class="wf-row"><div class="line sm" style="width:40px"></div><div class="btn-wire"></div></div></div>
-                <div class="wf-section"><div class="wf-stack"><div class="line lg" style="width:150px"></div><div class="line sm" style="width:260px"></div></div><div class="wf-grid-4" style="margin-top:20px"><div class="field"><div class="line sm" style="width:58px"></div><div class="field-input"></div></div><div class="field"><div class="line sm" style="width:78px"></div><div class="field-input"></div></div><div class="field"><div class="line sm" style="width:42px"></div><div class="field-input"></div></div><div class="field"><div class="line sm" style="width:56px"></div><div class="field-input"></div></div></div><div class="wf-row" style="justify-content:flex-end;margin-top:18px"><div class="btn-wire" style="width:160px"></div></div></div>
-                <div class="wf-grid-sidebar"><div class="wf-stack"><div class="wf-section"><div style="display:flex;justify-content:space-between;gap:16px;align-items:flex-start"><div class="wf-stack"><div class="line lg" style="width:150px"></div><div class="line sm" style="width:220px"></div><div class="line sm" style="width:180px"></div></div><div class="wf-stack" style="align-items:flex-end"><div class="line lg" style="width:70px"></div><div class="btn-wire" style="width:120px"></div></div></div><div class="wf-grid-3" style="margin-top:18px"><div class="box soft"><div class="line sm" style="width:42px"></div><div class="line lg" style="width:72px;margin-top:10px"></div></div><div class="box soft"><div class="line sm" style="width:42px"></div><div class="line lg" style="width:72px;margin-top:10px"></div></div><div class="box soft"><div class="line sm" style="width:42px"></div><div class="line lg" style="width:72px;margin-top:10px"></div></div></div></div><div class="wf-section"><div style="display:flex;justify-content:space-between;gap:16px;align-items:flex-start"><div class="wf-stack"><div class="line lg" style="width:150px"></div><div class="line sm" style="width:220px"></div><div class="line sm" style="width:180px"></div></div><div class="wf-stack" style="align-items:flex-end"><div class="line lg" style="width:70px"></div><div class="btn-wire" style="width:120px"></div></div></div><div class="wf-grid-3" style="margin-top:18px"><div class="box soft"><div class="line sm" style="width:42px"></div><div class="line lg" style="width:72px;margin-top:10px"></div></div><div class="box soft"><div class="line sm" style="width:42px"></div><div class="line lg" style="width:72px;margin-top:10px"></div></div><div class="box soft"><div class="line sm" style="width:42px"></div><div class="line lg" style="width:72px;margin-top:10px"></div></div></div></div><div class="wf-section"><div style="display:flex;justify-content:space-between;gap:16px;align-items:flex-start"><div class="wf-stack"><div class="line lg" style="width:150px"></div><div class="line sm" style="width:220px"></div><div class="line sm" style="width:180px"></div></div><div class="wf-stack" style="align-items:flex-end"><div class="line lg" style="width:70px"></div><div class="btn-wire" style="width:120px"></div></div></div><div class="wf-grid-3" style="margin-top:18px"><div class="box soft"><div class="line sm" style="width:42px"></div><div class="line lg" style="width:72px;margin-top:10px"></div></div><div class="box soft"><div class="line sm" style="width:42px"></div><div class="line lg" style="width:72px;margin-top:10px"></div></div><div class="box soft"><div class="line sm" style="width:42px"></div><div class="line lg" style="width:72px;margin-top:10px"></div></div></div></div></div><div class="wf-stack"><div class="wf-section"><div class="line lg" style="width:110px"></div><div class="wf-stack" style="margin-top:16px"><div class="field"><div class="line sm" style="width:54px"></div><div class="field-input"></div></div><div class="field"><div class="line sm" style="width:54px"></div><div class="field-input"></div></div><div class="field"><div class="line sm" style="width:54px"></div><div class="field-input"></div></div><div class="field"><div class="line sm" style="width:54px"></div><div class="field-input"></div></div></div></div><div class="wf-section"><div class="line lg" style="width:86px"></div><div class="wf-stack" style="margin-top:16px"><div class="box soft"><div class="line sm" style="width:100%"></div></div><div class="box soft"><div class="line sm" style="width:100%"></div></div><div class="box soft"><div class="line sm" style="width:100%"></div></div></div></div></div></div>
-              </div>
-            </div>
-          </div>
-          <div class="wf-note">Purpose: let users search a route, understand result states, compare basic route data, and continue into app.trainsit.com only when they are ready to book or sign in.</div>
-        </article>
-
-        <article class="wireframe-card">
-          <div class="wireframe-head"><div><h3 class="wireframe-title">Solutions — Desktop Wireframe</h3><div class="wireframe-meta">Full-page wireframe preview</div></div><div class="wireframe-tag">Desktop artboard</div></div>
-          <div class="artboard-wrap">
-            <div class="browser-bar"><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="address"></div></div>
-            <div class="artboard">
-              <div class="page">
-                <div class="wf-section wf-header"><div class="wf-row"><div class="box soft" style="width:120px;height:44px"></div><div class="wf-nav"><div class="line sm" style="width:56px"></div><div class="line sm" style="width:72px"></div><div class="line sm" style="width:58px"></div></div></div><div class="wf-row"><div class="line sm" style="width:40px"></div><div class="btn-wire"></div></div></div>
-                <div class="wf-section wf-grid-hero"><div class="wf-stack"><div class="line sm" style="width:76px"></div><div class="line xxl" style="width:88%"></div><div class="line lg" style="width:80%"></div><div class="line lg" style="width:72%"></div></div><div class="box image"></div></div>
-                <div class="wf-grid-2"><div class="wf-section"><div class="line lg" style="width:130px"></div><div class="line sm" style="width:100%;margin-top:14px"></div><div class="line sm" style="width:82%;margin-top:10px"></div><div class="line sm" style="width:64%;margin-top:10px"></div></div><div class="wf-section"><div class="line lg" style="width:130px"></div><div class="line sm" style="width:100%;margin-top:14px"></div><div class="line sm" style="width:82%;margin-top:10px"></div><div class="line sm" style="width:64%;margin-top:10px"></div></div><div class="wf-section"><div class="line lg" style="width:130px"></div><div class="line sm" style="width:100%;margin-top:14px"></div><div class="line sm" style="width:82%;margin-top:10px"></div><div class="line sm" style="width:64%;margin-top:10px"></div></div><div class="wf-section"><div class="line lg" style="width:130px"></div><div class="line sm" style="width:100%;margin-top:14px"></div><div class="line sm" style="width:82%;margin-top:10px"></div><div class="line sm" style="width:64%;margin-top:10px"></div></div></div>
-                <div class="wf-section"><div class="wf-stack"><div class="line lg" style="width:150px"></div><div class="line sm" style="width:240px"></div></div><div class="wf-grid-2" style="margin-top:18px"><div class="box soft"><div class="line lg" style="width:110px"></div><div class="line sm" style="width:100%;margin-top:14px"></div><div class="line sm" style="width:82%;margin-top:10px"></div><div class="line sm" style="width:64%;margin-top:10px"></div></div><div class="box soft"><div class="line lg" style="width:110px"></div><div class="line sm" style="width:100%;margin-top:14px"></div><div class="line sm" style="width:82%;margin-top:10px"></div><div class="line sm" style="width:64%;margin-top:10px"></div></div></div></div>
-                <div class="wf-section"><div class="wf-stack"><div class="line lg" style="width:100px"></div><div class="line sm" style="width:180px"></div></div><div class="wf-grid-2" style="margin-top:18px"><div class="box soft"><div class="line lg" style="width:84px"></div><div class="wf-stack" style="margin-top:16px"><div class="line sm" style="width:100%"></div><div class="line sm" style="width:100%"></div><div class="line sm" style="width:100%"></div><div class="line sm" style="width:100%"></div></div></div><div class="box soft"><div class="line lg" style="width:84px"></div><div class="wf-stack" style="margin-top:16px"><div class="line sm" style="width:100%"></div><div class="line sm" style="width:100%"></div><div class="line sm" style="width:100%"></div><div class="line sm" style="width:100%"></div></div></div></div></div>
-                <div class="wf-section"><div class="line lg" style="width:86px"></div><div class="wf-stack" style="margin-top:16px"><div class="box soft" style="padding:18px;display:flex;justify-content:space-between;align-items:center"><div class="wf-stack"><div class="line sm" style="width:180px"></div><div class="line sm" style="width:130px"></div></div><div class="line sm" style="width:12px"></div></div><div class="box soft" style="padding:18px;display:flex;justify-content:space-between;align-items:center"><div class="wf-stack"><div class="line sm" style="width:180px"></div><div class="line sm" style="width:130px"></div></div><div class="line sm" style="width:12px"></div></div><div class="box soft" style="padding:18px;display:flex;justify-content:space-between;align-items:center"><div class="wf-stack"><div class="line sm" style="width:180px"></div><div class="line sm" style="width:130px"></div></div><div class="line sm" style="width:12px"></div></div></div></div>
-                <div class="wf-section" style="display:flex;justify-content:space-between;align-items:center;gap:20px"><div class="wf-stack"><div class="line lg" style="width:170px"></div><div class="line sm" style="width:240px"></div></div><div class="btn-wire" style="width:150px"></div></div>
-              </div>
-            </div>
-          </div>
-          <div class="wf-note">Purpose: support evaluator and enterprise-buyer logic with clearer explanation of capabilities, operational fit, and value compared with traditional freight workflows.</div>
-        </article>
-
-        <article class="wireframe-card">
-          <div class="wireframe-head"><div><h3 class="wireframe-title">About — Desktop Wireframe</h3><div class="wireframe-meta">Full-page wireframe preview</div></div><div class="wireframe-tag">Desktop artboard</div></div>
-          <div class="artboard-wrap">
-            <div class="browser-bar"><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="address"></div></div>
-            <div class="artboard">
-              <div class="page">
-                <div class="wf-section wf-header"><div class="wf-row"><div class="box soft" style="width:120px;height:44px"></div><div class="wf-nav"><div class="line sm" style="width:56px"></div><div class="line sm" style="width:72px"></div><div class="line sm" style="width:58px"></div></div></div><div class="wf-row"><div class="line sm" style="width:40px"></div><div class="btn-wire"></div></div></div>
-                <div class="wf-section wf-grid-hero"><div class="box image tall"></div><div class="wf-stack"><div class="line sm" style="width:76px"></div><div class="line xxl" style="width:82%"></div><div class="line lg" style="width:100%"></div><div class="line lg" style="width:86%"></div><div class="line lg" style="width:64%"></div></div></div>
-                <div class="wf-section"><div class="wf-stack"><div class="line lg" style="width:120px"></div><div class="line sm" style="width:240px"></div></div><div class="wf-grid-2" style="margin-top:18px"><div class="wf-stack"><div class="line sm" style="width:100%"></div><div class="line sm" style="width:100%"></div><div class="line sm" style="width:82%"></div><div class="line sm" style="width:64%"></div></div><div class="wf-stack"><div class="line sm" style="width:100%"></div><div class="line sm" style="width:100%"></div><div class="line sm" style="width:82%"></div><div class="line sm" style="width:64%"></div></div></div></div>
-                <div class="wf-section"><div class="wf-stack"><div class="line lg" style="width:86px"></div><div class="line sm" style="width:160px"></div></div><div class="wf-grid-3" style="margin-top:18px"><div class="box"><div class="box image"></div><div class="line lg" style="width:84px;margin-top:14px"></div><div class="line sm" style="width:60px;margin-top:10px"></div><div class="line sm" style="width:100%;margin-top:12px"></div><div class="line sm" style="width:84%;margin-top:10px"></div></div><div class="box"><div class="box image"></div><div class="line lg" style="width:84px;margin-top:14px"></div><div class="line sm" style="width:60px;margin-top:10px"></div><div class="line sm" style="width:100%;margin-top:12px"></div><div class="line sm" style="width:84%;margin-top:10px"></div></div><div class="box"><div class="box image"></div><div class="line lg" style="width:84px;margin-top:14px"></div><div class="line sm" style="width:60px;margin-top:10px"></div><div class="line sm" style="width:100%;margin-top:12px"></div><div class="line sm" style="width:84%;margin-top:10px"></div></div></div></div>
-                <div class="wf-grid-3"><div class="wf-section"><div class="line lg" style="width:100px"></div><div class="line sm" style="width:100%;margin-top:14px"></div><div class="line sm" style="width:84%;margin-top:10px"></div><div class="line sm" style="width:64%;margin-top:10px"></div></div><div class="wf-section"><div class="line lg" style="width:100px"></div><div class="line sm" style="width:100%;margin-top:14px"></div><div class="line sm" style="width:84%;margin-top:10px"></div><div class="line sm" style="width:64%;margin-top:10px"></div></div><div class="wf-section"><div class="line lg" style="width:100px"></div><div class="line sm" style="width:100%;margin-top:14px"></div><div class="line sm" style="width:84%;margin-top:10px"></div><div class="line sm" style="width:64%;margin-top:10px"></div></div></div>
-                <div class="wf-section" style="display:flex;justify-content:space-between;align-items:center;gap:20px"><div class="wf-stack"><div class="line lg" style="width:160px"></div><div class="line sm" style="width:220px"></div></div><div class="btn-wire"></div></div>
-              </div>
-            </div>
-          </div>
-          <div class="wf-note">Purpose: provide company story, positioning, team credibility, and category narrative without bloating the homepage.</div>
-        </article>
-
-        <article class="wireframe-card">
-          <div class="wireframe-head"><div><h3 class="wireframe-title">Contact — Desktop Wireframe</h3><div class="wireframe-meta">Full-page wireframe preview</div></div><div class="wireframe-tag">Desktop artboard</div></div>
-          <div class="artboard-wrap">
-            <div class="browser-bar"><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="address"></div></div>
-            <div class="artboard">
-              <div class="page">
-                <div class="wf-section wf-header"><div class="wf-row"><div class="box soft" style="width:120px;height:44px"></div><div class="wf-nav"><div class="line sm" style="width:56px"></div><div class="line sm" style="width:72px"></div><div class="line sm" style="width:58px"></div></div></div><div class="wf-row"><div class="line sm" style="width:40px"></div><div class="btn-wire"></div></div></div>
-                <div class="wf-section wf-grid-hero"><div class="wf-stack"><div class="line sm" style="width:64px"></div><div class="line xxl" style="width:76%"></div><div class="line lg" style="width:82%"></div><div class="line lg" style="width:68%"></div></div><div class="box image tall"></div></div>
-                <div class="wf-grid-sidebar"><div class="wf-section"><div class="wf-grid-2"><div class="field"><div class="line sm" style="width:54px"></div><div class="field-input"></div></div><div class="field"><div class="line sm" style="width:54px"></div><div class="field-input"></div></div><div class="field"><div class="line sm" style="width:54px"></div><div class="field-input"></div></div><div class="field"><div class="line sm" style="width:54px"></div><div class="field-input"></div></div></div><div class="field" style="margin-top:14px"><div class="line sm" style="width:54px"></div><div class="field-input tall"></div></div><div class="wf-row" style="justify-content:flex-end;margin-top:18px"><div class="btn-wire"></div></div></div><div class="wf-stack"><div class="wf-section"><div class="line lg" style="width:90px"></div><div class="wf-stack" style="margin-top:16px"><div class="box soft"><div class="line sm" style="width:110px"></div><div class="line sm" style="width:80px;margin-top:10px"></div></div><div class="box soft"><div class="line sm" style="width:110px"></div><div class="line sm" style="width:80px;margin-top:10px"></div></div><div class="box soft"><div class="line sm" style="width:110px"></div><div class="line sm" style="width:80px;margin-top:10px"></div></div></div></div><div class="wf-section"><div class="line lg" style="width:76px"></div><div class="wf-stack" style="margin-top:16px"><div class="box soft" style="padding:18px;display:flex;justify-content:space-between;align-items:center"><div class="wf-stack"><div class="line sm" style="width:150px"></div><div class="line sm" style="width:96px"></div></div><div class="line sm" style="width:12px"></div></div><div class="box soft" style="padding:18px;display:flex;justify-content:space-between;align-items:center"><div class="wf-stack"><div class="line sm" style="width:150px"></div><div class="line sm" style="width:96px"></div></div><div class="line sm" style="width:12px"></div></div><div class="box soft" style="padding:18px;display:flex;justify-content:space-between;align-items:center"><div class="wf-stack"><div class="line sm" style="width:150px"></div><div class="line sm" style="width:96px"></div></div><div class="line sm" style="width:12px"></div></div></div></div></div></div>
-                <div class="wf-section"><div class="wf-grid-4"><div class="wf-stack"><div class="line lg" style="width:70px"></div><div class="line sm" style="width:90px"></div><div class="line sm" style="width:70px"></div></div><div class="wf-stack"><div class="line lg" style="width:70px"></div><div class="line sm" style="width:90px"></div><div class="line sm" style="width:70px"></div></div><div class="wf-stack"><div class="line lg" style="width:70px"></div><div class="line sm" style="width:90px"></div><div class="line sm" style="width:70px"></div></div><div class="wf-stack"><div class="line lg" style="width:70px"></div><div class="line sm" style="width:90px"></div><div class="line sm" style="width:70px"></div></div></div></div>
-              </div>
-            </div>
-          </div>
-          <div class="wf-note">Purpose: act as a secondary conversion path for buyers who are not ready to use the quote flow or need direct contact with the team.</div>
-        </article>
       </div>
     </div>
   </section>
 
   <section class="section" id="architecture">
     <div class="container">
-      <div class="eyebrow">6. Technical architecture</div>
-      <h2>Website-to-app handoff model.</h2>
-      <div class="section-intro">The website remains a marketing and quote-entry layer. Product workflows stay on app.trainsit.com.</div>
-      <div class="grid-4" style="margin-top:24px">
-        <div class="card accent-card"><h3>trainsit.com (Website)</h3><p>Webflow-based marketing layer responsible for content, SEO, analytics, contact, and Get a Quote UI.</p></div>
-        <div class="card"><h3>Get a Quote UI</h3><p>A JavaScript-powered form on the website that submits route / quote requests to Trainsit API.</p></div>
-        <div class="card"><h3>API Integration</h3><p>Website sends request to quote / route endpoint and renders success, no-result, and error states based on JSON response.</p></div>
-        <div class="card"><h3>app.trainsit.com</h3><p>React / Next.js application that owns dashboard, reports, booking, logistics management, registration, and login.</p></div>
-      </div>
-      <div class="grid-side" style="margin-top:20px">
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr><th>What Trainsit dev team must provide for Get a Quote</th><th>Why it matters</th></tr>
-            </thead>
-            <tbody>
-              <tr><td>Endpoint URL</td><td>Where the website should send the request</td></tr>
-              <tr><td>Method (GET / POST)</td><td>How the request must be sent</td></tr>
-              <tr><td>Request parameters</td><td>Fields, types, required vs optional values</td></tr>
-              <tr><td>Authentication requirement</td><td>API key, token, open access, or other auth mechanism</td></tr>
-              <tr><td>Success response format</td><td>JSON structure and sample response</td></tr>
-              <tr><td>No-result response format</td><td>What returns when no route is found</td></tr>
-              <tr><td>Error response format</td><td>Status codes and message structure</td></tr>
-              <tr><td>CORS</td><td>Allow website domain to call the API</td></tr>
-              <tr><td>Rate limits</td><td>Control request volume and abuse limits</td></tr>
-            </tbody>
-          </table>
+      <div class="eyebrow">5. Technical architecture</div>
+      <h2>Updated architecture after the answers.</h2>
+      <div class="grid-3" style="margin-top:24px;">
+        <div class="card accent-card">
+          <h3>Website</h3>
+          <p>Webflow-based marketing layer on <code>trainsit.com</code> with content, SEO, analytics, FAQ, contact, and Get a Quote UI.</p>
         </div>
-        <div>
-          <div class="card accent-card">
-            <h3>Recommended website platform</h3>
-            <p>Webflow is the leaner choice for this scope: fast visual build, managed hosting, CMS for blog and FAQ, and sufficient flexibility for one API-driven quote/search integration.</p>
-          </div>
-          <div class="card" style="margin-top:16px">
-            <h3>Division of responsibility</h3>
-            <p>trainsit.com owns marketing, content, SEO, analytics, contact, and Get a Quote UI. app.trainsit.com owns dashboard, reports, booking, logistics management, registration, and login.</p>
-          </div>
-          <div class="card" style="margin-top:16px">
-            <h3>Routing logic</h3>
-            <p>Quote results can be shown on the website, but booking and authenticated continuation should always route into the app.</p>
-          </div>
+        <div class="card accent-card">
+          <h3>Public quote integration</h3>
+          <p>The website sends requests to the public quote endpoint and renders success, loading, no-results, and error states directly on the site.</p>
+        </div>
+        <div class="card accent-card">
+          <h3>App handoff</h3>
+          <p>Booking and authenticated continuation always move to <code>app.trainsit.com</code>. The current confirmed Book handoff is <code>/login?option_id={option_id}</code>.</p>
+        </div>
+      </div>
+
+      <div class="table-wrap" style="margin-top:20px;">
+        <table>
+          <thead>
+            <tr>
+              <th>Technical constraint</th>
+              <th>Discovery impact</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Quote API exists and is documented</td>
+              <td>Architecture no longer needs discovery around whether Get a Quote is feasible. It is now an implementation design topic.</td>
+            </tr>
+            <tr>
+              <td>Public search is open</td>
+              <td>No website auth is required for quote search, but abuse mitigation and traffic control remain relevant.</td>
+            </tr>
+            <tr>
+              <td>API latency is 3–15 seconds</td>
+              <td>Loading UX, progress messaging, and timeout behavior become mandatory discovery items.</td>
+            </tr>
+            <tr>
+              <td>No-route fallback should become “Request This Route”</td>
+              <td>No-results state is no longer just an error state. It becomes a separate recovery flow.</td>
+            </tr>
+            <tr>
+              <td>App already handles dashboard auth redirect</td>
+              <td>Discovery should stop discussing generic auth routing and instead validate specific Book and option handoff behavior.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="dependencies">
+    <div class="container">
+      <div class="eyebrow">6. Dependencies and required validations</div>
+      <h2>What still must be checked before build starts.</h2>
+      <div class="grid-2" style="margin-top:24px;">
+        <div class="card">
+          <h3>Technical validations</h3>
+          <ul>
+            <li>Validate the real quote API request/response cycle using actual frontend calls.</li>
+            <li>Confirm exact request payload and response mapping for result cards.</li>
+            <li>Validate how <code>option_id</code> behaves through login and whether the user lands on the right post-login state.</li>
+            <li>Confirm no-results payload shape for Request This Route logic.</li>
+            <li>Validate rate-limit behavior under public traffic.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Content and release dependencies</h3>
+          <ul>
+            <li>Solutions, FAQ, insurance, coverage, and operations content still need to be supplied or written.</li>
+            <li>Logo and final visual direction are still dependencies for design quality, even if platform choice is fixed.</li>
+            <li>Staging is not required immediately, but release governance is still a future risk if no staging process exists.</li>
+          </ul>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="section" id="decisions">
+  <section class="section" id="open-items">
     <div class="container">
-      <div class="eyebrow">7. What must be decided before start</div>
-      <h2>Pre-start decisions and rollout frame.</h2>
-      <div class="grid-main" style="margin-top:24px">
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr><th>#</th><th>Decision</th><th>Owner</th><th>When</th></tr>
-            </thead>
-            <tbody>
-              <tr><td>1</td><td>Confirm website scope: marketing site + Get a Quote integration, with everything else staying in app</td><td>Product Owner</td><td>Before start</td></tr>
-              <tr><td>2</td><td>Confirm Webflow as website platform</td><td>PO + Agency</td><td>Before start</td></tr>
-              <tr><td>3</td><td>Provide API documentation for route / quote search</td><td>Trainsit dev team</td><td>Week 0–1</td></tr>
-              <tr><td>4</td><td>Share timeline for updated logo</td><td>Trainsit</td><td>Week 0</td></tr>
-              <tr><td>5</td><td>Agree feedback turnaround SLA (24–48h)</td><td>All stakeholders</td><td>Kickoff</td></tr>
-              <tr><td>6</td><td>Confirm app redirect behavior: logged in → dashboard, not logged in → registration / login</td><td>Trainsit dev team</td><td>Week 1</td></tr>
-            </tbody>
-          </table>
+      <div class="eyebrow">7. Remaining open items</div>
+      <h2>What is still open in discovery after the answers.</h2>
+      <div class="grid-2" style="margin-top:24px;">
+        <div class="card accent-card">
+          <h3>Still open, but now narrower</h3>
+          <div class="status-list">
+            <div class="status-item warn"><strong>Book continuation after login:</strong> the redirect URL is defined, but the full post-login continuation still needs validation.</div>
+            <div class="status-item warn"><strong>No-route UX:</strong> the fallback direction is clear, but the exact form behavior and backend handling still need definition.</div>
+            <div class="status-item warn"><strong>Result-state design:</strong> response time and API data model require detailed UI mapping.</div>
+          </div>
         </div>
-        <div>
-          <div class="card accent-card">
-            <h3>Estimate</h3>
-            <div class="estimate" style="margin-top:10px">84–125 hours</div>
-          </div>
-          <div class="card" style="margin-top:16px">
-            <h3>Timeline</h3>
-            <div class="timeline" style="margin-top:10px">
-              <div class="timeline-item">Week 0: decisions, API clarification, brand inputs.</div>
-              <div class="timeline-item">Week 1–2: design and content structure.</div>
-              <div class="timeline-item">Week 2–3: page build in Webflow.</div>
-              <div class="timeline-item">Week 3–4: Get a Quote integration.</div>
-              <div class="timeline-item">Week 4–5: testing, QA, launch.</div>
-            </div>
-          </div>
-          <div class="card" style="margin-top:16px">
-            <h3>Delivery assumption</h3>
-            <p>Five weeks is realistic only if scope stays lean, API clarifications arrive early, and stakeholder response time stays fast.</p>
+        <div class="card">
+          <h3>Discovery conclusion</h3>
+          <p>The discovery is no longer primarily strategic. The main uncertainty is now concentrated in integration details, edge cases, and handoff behavior. That is the level the next revision of the discovery document should reflect.</p>
+          <div class="status-list">
+            <div class="status-item ok"><strong>Strategy uncertainty:</strong> significantly reduced.</div>
+            <div class="status-item ok"><strong>Scope uncertainty:</strong> largely resolved.</div>
+            <div class="status-item warn"><strong>Flow/API uncertainty:</strong> still active and should stay in discovery.</div>
           </div>
         </div>
       </div>
@@ -946,7 +425,7 @@
   </section>
 
   <footer class="footer">
-    <div class="container">Prepared as a standalone static HTML blueprint for GitHub + Vercel deployment.</div>
+    <div class="container">Prepared as a standalone static HTML discovery update for GitHub + Vercel import.</div>
   </footer>
 </body>
 </html>
